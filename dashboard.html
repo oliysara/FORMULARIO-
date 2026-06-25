@@ -3,304 +3,451 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Boda Sara & Oliver</title>
+  <title>Dashboard boda - Sara & Oliver</title>
+
   <style>
-    :root{
-      --bg1:#fbf7f1; --bg2:#efe4d8; --card:#fffdf9; --text:#3a2f2a;
-      --muted:#75645a; --accent:#b98b6f; --accent2:#9c7159; --border:#e8d9cc;
-      --ok:#4c7a58; --warn:#b88435; --bad:#9b4d4d; --soft:#fff8f1;
+    :root {
+      --bg1:#fbf7f1;
+      --bg2:#efe4d8;
+      --card:#fffdf9;
+      --text:#3a2f2a;
+      --muted:#75645a;
+      --accent:#b98b6f;
+      --accent2:#9c7159;
+      --border:#e8d9cc;
+      --ok:#4c7a58;
+      --bad:#9b4d4d;
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; min-height:100vh; color:var(--text);
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--text);
       background:
-        radial-gradient(circle at 18% 8%, rgba(255,255,255,.95), transparent 30%),
-        radial-gradient(circle at 88% 92%, rgba(185,139,111,.20), transparent 28%),
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.9), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(185,139,111,.2), transparent 28%),
         linear-gradient(135deg,var(--bg1),var(--bg2));
-      padding:24px;
+      padding: 22px;
     }
-    .app{width:100%; max-width:1180px; margin:0 auto}
-    .hero{
-      background:rgba(255,253,249,.94); border:1px solid var(--border); border-radius:34px;
-      box-shadow:0 24px 70px rgba(70,45,28,.14); padding:34px 28px; margin-bottom:22px;
-      display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap;
+
+    .wrap {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-    .orn{font-family:Georgia,serif; letter-spacing:9px; color:var(--accent); font-size:20px; margin-bottom:8px}
-    .small{font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px}
-    h1{font-family:Georgia,'Times New Roman',serif; font-size:clamp(34px,7vw,58px); font-weight:400; margin:0; line-height:1.02}
-    .sub{color:var(--muted); margin:12px 0 0; line-height:1.5}
-    .hero-actions{display:flex; gap:10px; flex-wrap:wrap}
-    button,.btn-link{
-      border:0; border-radius:999px; padding:13px 18px; cursor:pointer; font-weight:700;
-      background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; text-decoration:none;
-      box-shadow:0 12px 24px rgba(137,93,66,.18); transition:.18s;
+
+    .card {
+      background: rgba(255,253,249,.94);
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      box-shadow: 0 24px 70px rgba(70,45,28,.14);
+      overflow: hidden;
+      margin-bottom: 20px;
     }
-    button:hover,.btn-link:hover{transform:translateY(-1px)}
-    .ghost{background:#fffaf6; color:var(--text); border:1px solid var(--border); box-shadow:none}
-    .login{
-      max-width:520px; margin:50px auto; background:rgba(255,253,249,.95); border:1px solid var(--border);
-      border-radius:30px; box-shadow:0 24px 70px rgba(70,45,28,.14); padding:34px;
+
+    .top {
+      padding: 38px 30px 24px;
+      text-align: center;
     }
-    .login h2{font-family:Georgia,serif; font-size:36px; font-weight:400; margin:0 0 8px}
-    input[type="password"],input[type="search"]{
-      width:100%; border:1px solid var(--border); border-radius:18px; background:#fffaf6;
-      padding:15px 16px; font-size:16px; color:#2e2926; outline:none;
+
+    .orn {
+      font-size: 20px;
+      letter-spacing: 10px;
+      color: var(--accent);
+      margin-bottom: 12px;
     }
-    input:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(185,139,111,.13)}
-    .login-row{display:grid; grid-template-columns:1fr auto; gap:10px; margin-top:18px}
-    .hidden{display:none!important}
-    .grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px}
-    .stat{
-      background:rgba(255,253,249,.94); border:1px solid var(--border); border-radius:26px; padding:20px;
-      box-shadow:0 14px 34px rgba(70,45,28,.09);
+
+    .small {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
     }
-    .stat .num{font-size:34px; font-weight:800; line-height:1; margin-bottom:7px}
-    .stat .label{color:var(--muted); font-weight:700}
-    .section{
-      background:rgba(255,253,249,.94); border:1px solid var(--border); border-radius:30px;
-      box-shadow:0 16px 44px rgba(70,45,28,.10); padding:24px; margin-bottom:22px;
+
+    h1 {
+      font-size: clamp(36px,8vw,60px);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.02;
     }
-    .section-head{display:flex; justify-content:space-between; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:18px}
-    h2{font-family:Georgia,serif; font-weight:400; font-size:32px; margin:0}
-    .bar-wrap{display:grid; gap:12px}
-    .bar-row{display:grid; grid-template-columns:110px 1fr 48px; gap:12px; align-items:center}
-    .bar-bg{height:14px; background:#f1e5da; border-radius:999px; overflow:hidden}
-    .bar{height:100%; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:999px; width:0%}
-    .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
-    .person{
-      border:1px solid var(--border); border-radius:22px; background:#fffaf6; padding:16px; line-height:1.45;
+
+    .intro {
+      max-width: 620px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
     }
-    .person strong{display:block; font-size:18px; margin-bottom:6px}
-    .pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#f3e6db; color:#65483a; font-size:13px; font-weight:700; margin:2px 4px 2px 0}
-    .pill.warn{background:#fff1d6; color:#795014}.pill.bad{background:#f8e6e6; color:#7d3434}.pill.ok{background:#e8f2ea; color:#33573d}
-    table{width:100%; border-collapse:separate; border-spacing:0 10px}
-    th{text-align:left; color:var(--muted); font-size:13px; letter-spacing:.3px; padding:0 12px}
-    td{background:#fffaf6; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:14px 12px; vertical-align:top}
-    td:first-child{border-left:1px solid var(--border); border-radius:16px 0 0 16px; font-weight:700}
-    td:last-child{border-right:1px solid var(--border); border-radius:0 16px 16px 0}
-    .message{padding:14px 16px; border-radius:18px; margin:12px 0; display:none; line-height:1.45}
-    .message.show{display:block}.message.bad{background:#f7e9e9; color:#642c2c; border:1px solid #ebcccc}.message.ok{background:#eaf4ed; color:#264a30; border:1px solid #cce2d1}
-    .footer{text-align:center; color:var(--muted); margin:24px 0 8px}
-    @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.bar-row{grid-template-columns:90px 1fr 42px}.table-wrap{overflow:auto}table{min-width:760px}}
-    @media(max-width:560px){body{padding:12px}.hero,.section,.login{border-radius:24px;padding:22px}.grid{grid-template-columns:1fr}.login-row{grid-template-columns:1fr}.hero-actions{width:100%}.hero-actions button,.btn-link{width:100%; text-align:center}.orn{letter-spacing:6px}}
+
+    .login {
+      padding: 0 30px 34px;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fffaf6;
+      padding: 15px 16px;
+      font: 16px system-ui,-apple-system,Segoe UI,sans-serif;
+      color: #2e2926;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(185,139,111,.13);
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      color: white;
+      padding: 16px 22px;
+      font: 700 16px system-ui,-apple-system,Segoe UI,sans-serif;
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(137,93,66,.22);
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      padding: 28px;
+    }
+
+    .stat {
+      background: #fffaf6;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(120,80,50,.08);
+    }
+
+    .stat .num {
+      font: 800 34px system-ui,-apple-system,Segoe UI,sans-serif;
+      color: var(--accent2);
+    }
+
+    .stat .label {
+      margin-top: 6px;
+      color: var(--muted);
+      font: 14px system-ui,-apple-system,Segoe UI,sans-serif;
+    }
+
+    .section {
+      padding: 28px;
+    }
+
+    .section h2 {
+      font-size: 30px;
+      font-weight: 400;
+      margin: 0 0 18px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar input {
+      flex: 1;
+      min-width: 230px;
+      margin: 0;
+    }
+
+    .small-btn {
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 18px;
+      font: 700 14px system-ui,-apple-system,Segoe UI,sans-serif;
+      cursor: pointer;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .person {
+      background: #fffaf6;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 16px;
+      font: 15px system-ui,-apple-system,Segoe UI,sans-serif;
+    }
+
+    .person strong {
+      font-size: 17px;
+      color: var(--text);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      margin-right: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f4e7dc;
+      color: var(--accent2);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font: 14px system-ui,-apple-system,Segoe UI,sans-serif;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 800;
+      background: #fffaf6;
+    }
+
+    .msg {
+      padding: 16px;
+      border-radius: 18px;
+      background: #f7e9e9;
+      color: #642c2c;
+      border: 1px solid #ebcccc;
+      font: 15px system-ui,-apple-system,Segoe UI,sans-serif;
+      display: none;
+      margin-top: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 30px 30px;
+      line-height: 1.45;
+    }
+
+    @media(max-width:900px) {
+      .grid { grid-template-columns: repeat(2,1fr); }
+    }
+
+    @media(max-width:560px) {
+      body { padding: 12px; }
+      .card { border-radius: 26px; }
+      .top, .section, .grid { padding-left: 20px; padding-right: 20px; }
+      .grid { grid-template-columns: 1fr; }
+      .orn { letter-spacing: 7px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="login" id="loginBox">
-    <div class="orn">✦ ✧ ✦</div>
-    <div class="small">Panel privado</div>
-    <h2>Resumen boda</h2>
-    <p class="sub">Introduce la contraseña para ver el panel de organización de Sara & Oliver.</p>
-    <div class="login-row">
-      <input id="password" type="password" placeholder="Contraseña" autocomplete="current-password" />
-      <button id="loginBtn">Entrar</button>
-    </div>
-    <div class="message bad" id="loginMsg">Contraseña incorrecta.</div>
-  </div>
-
-  <main class="app hidden" id="app">
-    <section class="hero">
-      <div>
+  <main class="wrap">
+    <section class="card">
+      <div class="top">
         <div class="orn">✦ ✧ ✦</div>
-        <div class="small">Sara & Oliver</div>
-        <h1>Panel de boda</h1>
-        <p class="sub">Totales de menú, alergias, listado de respuestas y resumen para el restaurante.</p>
+        <div class="small">Panel privado</div>
+        <h1>Sara & Oliver</h1>
+        <p class="intro">Resumen de menús, alergias y respuestas recibidas para organizar nuestro día especial.</p>
       </div>
-      <div class="hero-actions">
-        <button id="refreshBtn">Actualizar datos</button>
-        <button class="ghost" id="printBtn">Imprimir</button>
-        <button class="ghost" id="csvBtn">Descargar CSV</button>
-        <a class="btn-link ghost" href="./">Volver al formulario</a>
-      </div>
-    </section>
 
-    <div class="message bad" id="errorBox"></div>
-    <div class="message ok" id="okBox"></div>
-
-    <section class="grid">
-      <div class="stat"><div class="num" id="total">0</div><div class="label">👥 Invitados</div></div>
-      <div class="stat"><div class="num" id="carne">0</div><div class="label">🥩 Carne</div></div>
-      <div class="stat"><div class="num" id="pescado">0</div><div class="label">🐟 Pescado</div></div>
-      <div class="stat"><div class="num" id="infantil">0</div><div class="label">👶 Infantil</div></div>
-      <div class="stat"><div class="num" id="alergiasCount">0</div><div class="label">⚠️ Alergias</div></div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <h2>Distribución de menús</h2>
-        <span class="pill">Actualizado: <span id="updatedAt">—</span></span>
-      </div>
-      <div class="bar-wrap">
-        <div class="bar-row"><strong>🥩 Carne</strong><div class="bar-bg"><div class="bar" id="barCarne"></div></div><span id="pctCarne">0%</span></div>
-        <div class="bar-row"><strong>🐟 Pescado</strong><div class="bar-bg"><div class="bar" id="barPescado"></div></div><span id="pctPescado">0%</span></div>
-        <div class="bar-row"><strong>👶 Infantil</strong><div class="bar-bg"><div class="bar" id="barInfantil"></div></div><span id="pctInfantil">0%</span></div>
+      <div class="login" id="loginBox">
+        <input id="password" type="password" placeholder="Introduce la contraseña">
+        <button class="btn" onclick="login()">Entrar</button>
+        <div class="msg" id="loginMsg">Contraseña incorrecta.</div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-head">
-        <h2>Buscar invitado</h2>
-        <input id="search" type="search" placeholder="Buscar por nombre, menú, alergia..." />
+    <section class="dashboard" id="dashboard">
+      <div class="card">
+        <div class="grid">
+          <div class="stat"><div class="num" id="total">0</div><div class="label">👥 Invitados</div></div>
+          <div class="stat"><div class="num" id="carne">0</div><div class="label">🥩 Carne</div></div>
+          <div class="stat"><div class="num" id="pescado">0</div><div class="label">🐟 Pescado</div></div>
+          <div class="stat"><div class="num" id="infantil">0</div><div class="label">👶 Infantil</div></div>
+          <div class="stat"><div class="num" id="alergiasTotal">0</div><div class="label">⚠️ Alergias</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section">
+          <h2>⚠️ Personas con alergias</h2>
+          <div class="list" id="alergiasList"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section">
+          <h2>📋 Todas las respuestas</h2>
+
+          <div class="toolbar">
+            <input id="search" type="text" placeholder="Buscar por nombre, menú o alergia...">
+            <button class="small-btn" onclick="loadData()">Actualizar</button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Nombre</th>
+                  <th>Menú</th>
+                  <th>Alergia</th>
+                  <th>Detalle</th>
+                  <th>Observaciones</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="msg" id="errorMsg"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Sara & Oliver · Nuestra boda
       </div>
     </section>
-
-    <section class="section">
-      <div class="section-head"><h2>⚠️ Personas con alergias</h2><span class="pill bad" id="allergyPill">0 personas</span></div>
-      <div class="cards" id="allergyList"></div>
-    </section>
-
-    <section class="section">
-      <div class="section-head"><h2>📋 Todas las respuestas</h2><span class="pill" id="visibleCount">0 visibles</span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th><th>Observaciones</th><th>Fecha</th></tr></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <div class="footer">Sara & Oliver · Nuestra boda</div>
   </main>
 
   <script>
+    const PASSWORD = "boda2025";
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEz1CQt2ujkT6llcKMfdAzoRWhky1Wet2SbqHcKM3cf4yoiRzxmUe1x4iHynd5qAyE/exec";
-    const DASHBOARD_PASSWORD = "boda2025";
 
-    let rows = [];
-    let filteredRows = [];
+    let allData = [];
 
-    const $ = (id) => document.getElementById(id);
-    const normalize = (v) => String(v ?? "").trim();
-    const lower = (v) => normalize(v).toLowerCase();
-    const isYes = (v) => lower(v) === "sí" || lower(v) === "si" || lower(v) === "yes";
-    const isMenu = (row, menu) => lower(row.menu) === lower(menu);
-    const escapeHTML = (str) => normalize(str).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    function login() {
+      const pass = document.getElementById("password").value;
+      const msg = document.getElementById("loginMsg");
 
-    function unlock(){
-      const pass = $('password').value;
-      if(pass !== DASHBOARD_PASSWORD){ $('loginMsg').classList.add('show'); return; }
-      $('loginBox').classList.add('hidden');
-      $('app').classList.remove('hidden');
-      loadData();
-    }
-
-    $('loginBtn').addEventListener('click', unlock);
-    $('password').addEventListener('keydown', e => { if(e.key === 'Enter') unlock(); });
-    $('refreshBtn').addEventListener('click', loadData);
-    $('printBtn').addEventListener('click', () => window.print());
-    $('csvBtn').addEventListener('click', downloadCSV);
-    $('search').addEventListener('input', render);
-
-    async function loadData(){
-      showError(''); showOk('Cargando datos...');
-      try{
-        const res = await fetch(SCRIPT_URL + '?t=' + Date.now());
-        const data = await res.json();
-        rows = Array.isArray(data) ? data.filter(r => normalize(r.nombre)) : [];
-        showOk('Datos actualizados correctamente.');
-        $('updatedAt').textContent = new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-        render();
-      }catch(err){
-        showOk('');
-        showError('No se pudieron cargar los datos. Revisa que Apps Script tenga un doGet que devuelva JSON y que hayas implementado una nueva versión.');
+      if (pass === PASSWORD) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        loadData();
+      } else {
+        msg.style.display = "block";
       }
     }
 
-    function render(){
-      const q = lower($('search').value);
-      filteredRows = rows.filter(r => !q || [r.nombre,r.menu,r.tieneAlergia,r.alergias,r.observaciones].some(v => lower(v).includes(q)));
+    async function loadData() {
+      const errorMsg = document.getElementById("errorMsg");
+      errorMsg.style.display = "none";
 
-      const total = rows.length;
-      const carne = rows.filter(r => isMenu(r,'Carne')).length;
-      const pescado = rows.filter(r => isMenu(r,'Pescado')).length;
-      const infantil = rows.filter(r => lower(r.menu).includes('infantil')).length;
-      const alergias = rows.filter(r => isYes(r.tieneAlergia) || normalize(r.alergias)).length;
-
-      $('total').textContent = total;
-      $('carne').textContent = carne;
-      $('pescado').textContent = pescado;
-      $('infantil').textContent = infantil;
-      $('alergiasCount').textContent = alergias;
-
-      setBar('Carne', carne, total);
-      setBar('Pescado', pescado, total);
-      setBar('Infantil', infantil, total);
-
-      renderAllergies(rows.filter(r => isYes(r.tieneAlergia) || normalize(r.alergias)));
-      renderTable(filteredRows);
-      $('visibleCount').textContent = filteredRows.length + ' visibles';
+      try {
+        const res = await fetch(SCRIPT_URL);
+        allData = await res.json();
+        render(allData);
+      } catch (e) {
+        errorMsg.textContent = "No se pudieron cargar los datos. Revisa que Apps Script tenga el doGet actualizado.";
+        errorMsg.style.display = "block";
+      }
     }
 
-    function setBar(name, count, total){
-      const pct = total ? Math.round((count / total) * 100) : 0;
-      $('bar' + name).style.width = pct + '%';
-      $('pct' + name).textContent = pct + '%';
+    function render(data) {
+      const total = data.length;
+      const carne = data.filter(x => x.menu === "Carne").length;
+      const pescado = data.filter(x => x.menu === "Pescado").length;
+      const infantil = data.filter(x => x.menu === "Menú infantil").length;
+      const conAlergias = data.filter(x => x.tieneAlergia === "Sí").length;
+
+      document.getElementById("total").textContent = total;
+      document.getElementById("carne").textContent = carne;
+      document.getElementById("pescado").textContent = pescado;
+      document.getElementById("infantil").textContent = infantil;
+      document.getElementById("alergiasTotal").textContent = conAlergias;
+
+      renderAlergias(data);
+      renderTable(data);
     }
 
-    function renderAllergies(list){
-      $('allergyPill').textContent = list.length + (list.length === 1 ? ' persona' : ' personas');
-      if(!list.length){
-        $('allergyList').innerHTML = '<div class="person"><strong>Sin alergias registradas</strong><span class="pill ok">Todo despejado</span></div>';
+    function renderAlergias(data) {
+      const box = document.getElementById("alergiasList");
+      const alergias = data.filter(x => x.tieneAlergia === "Sí");
+
+      if (alergias.length === 0) {
+        box.innerHTML = `<div class="person">No hay alergias registradas.</div>`;
         return;
       }
-      $('allergyList').innerHTML = list.map(r => `
-        <article class="person">
-          <strong>${escapeHTML(r.nombre)}</strong>
-          <span class="pill">${menuIcon(r.menu)} ${escapeHTML(r.menu || 'Sin menú')}</span>
-          <span class="pill bad">⚠️ ${escapeHTML(r.alergias || 'Sin detalle')}</span>
-          ${normalize(r.observaciones) ? `<p>${escapeHTML(r.observaciones)}</p>` : ''}
-        </article>
-      `).join('');
+
+      box.innerHTML = alergias.map(x => `
+        <div class="person">
+          <strong>${escapeHTML(x.nombre || "")}</strong><br>
+          <span class="tag">${escapeHTML(x.menu || "")}</span>
+          <span class="tag">⚠️ ${escapeHTML(x.alergias || "Sin detalle")}</span>
+        </div>
+      `).join("");
     }
 
-    function renderTable(list){
-      if(!list.length){
-        $('tableBody').innerHTML = '<tr><td colspan="6">No hay respuestas para mostrar.</td></tr>';
-        return;
-      }
-      $('tableBody').innerHTML = list.map(r => `
+    function renderTable(data) {
+      const body = document.getElementById("tableBody");
+
+      body.innerHTML = data.map(x => `
         <tr>
-          <td>${escapeHTML(r.nombre)}</td>
-          <td>${menuIcon(r.menu)} ${escapeHTML(r.menu)}</td>
-          <td>${isYes(r.tieneAlergia) || normalize(r.alergias) ? '⚠️ Sí' : '✅ No'}</td>
-          <td>${escapeHTML(r.alergias)}</td>
-          <td>${escapeHTML(r.observaciones)}</td>
-          <td>${formatDate(r.fecha)}</td>
+          <td>${formatDate(x.fecha)}</td>
+          <td>${escapeHTML(x.nombre || "")}</td>
+          <td>${escapeHTML(x.menu || "")}</td>
+          <td>${escapeHTML(x.tieneAlergia || "")}</td>
+          <td>${escapeHTML(x.alergias || "")}</td>
+          <td>${escapeHTML(x.observaciones || "")}</td>
         </tr>
-      `).join('');
+      `).join("");
     }
 
-    function menuIcon(menu){
-      const m = lower(menu);
-      if(m.includes('carne')) return '🥩';
-      if(m.includes('pescado')) return '🐟';
-      if(m.includes('infantil')) return '👶';
-      return '🍽️';
-    }
+    document.getElementById("search").addEventListener("input", function () {
+      const q = this.value.toLowerCase();
 
-    function formatDate(value){
-      if(!value) return '';
+      const filtered = allData.filter(x =>
+        String(x.nombre || "").toLowerCase().includes(q) ||
+        String(x.menu || "").toLowerCase().includes(q) ||
+        String(x.alergias || "").toLowerCase().includes(q) ||
+        String(x.observaciones || "").toLowerCase().includes(q)
+      );
+
+      render(filtered);
+    });
+
+    function formatDate(value) {
+      if (!value) return "";
       const d = new Date(value);
-      if(isNaN(d)) return escapeHTML(value);
-      return d.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+      if (isNaN(d)) return String(value);
+      return d.toLocaleDateString("es-ES") + " " + d.toLocaleTimeString("es-ES", {hour:"2-digit", minute:"2-digit"});
     }
 
-    function downloadCSV(){
-      const headers = ['Fecha','Nombre','Menu','Tiene alergia','Alergias','Observaciones'];
-      const csv = [headers, ...rows.map(r => [r.fecha,r.nombre,r.menu,r.tieneAlergia,r.alergias,r.observaciones])]
-        .map(row => row.map(cell => '"' + normalize(cell).replace(/"/g,'""') + '"').join(','))
-        .join('\n');
-      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'respuestas-boda-sara-oliver.csv'; a.click();
-      URL.revokeObjectURL(url);
+    function escapeHTML(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
-
-    function showError(text){ $('errorBox').textContent = text; $('errorBox').classList.toggle('show', !!text); }
-    function showOk(text){ $('okBox').textContent = text; $('okBox').classList.toggle('show', !!text); }
   </script>
 </body>
 </html>
