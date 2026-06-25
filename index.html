@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boda Sara & Oliver</title>
+  <style>
+    :root {
+      --bg1:#fbf7f1;
+      --bg2:#efe4d8;
+      --card:#fffdf9;
+      --text:#3a2f2a;
+      --muted:#75645a;
+      --accent:#b98b6f;
+      --accent2:#9c7159;
+      --border:#e8d9cc;
+      --ok:#4c7a58;
+      --bad:#9b4d4d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.9), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(185,139,111,.2), transparent 28%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    .wrap { width: 100%; max-width: 720px; }
+
+    .card {
+      background: rgba(255,253,249,.96);
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      box-shadow: 0 24px 70px rgba(70,45,28,.14);
+      overflow: hidden;
+    }
+
+    .top {
+      padding: 38px 30px 22px;
+      text-align: center;
+    }
+
+    .orn {
+      font-size: 20px;
+      letter-spacing: 10px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .small {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 60px);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.02;
+    }
+
+    .date {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .intro {
+      max-width: 530px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    form { padding: 10px 30px 34px; }
+
+    .field { margin: 20px 0; }
+
+    label.title {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .hint {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.4;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fffaf6;
+      padding: 15px 16px;
+      font: 16px system-ui, -apple-system, Segoe UI, sans-serif;
+      color: #2e2926;
+      outline: none;
+      transition: .2s;
+    }
+
+    textarea { min-height: 105px; resize: vertical; }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(185,139,111,.13);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .option input { display: none; }
+
+    .option span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 72px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: #fffaf6;
+      cursor: pointer;
+      transition: .18s;
+      font-size: 17px;
+      color: var(--text);
+      text-align: center;
+      padding: 12px;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    .option input:checked + span {
+      border-color: var(--accent);
+      background: #f4e7dc;
+      box-shadow: 0 10px 22px rgba(120,80,50,.10);
+    }
+
+    .wide { grid-column: 1 / -1; }
+    .hidden { display: none !important; }
+    .divider { height: 1px; background: var(--border); margin: 26px 0; }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      padding: 16px 22px;
+      font: 700 16px system-ui, -apple-system, Segoe UI, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(137,93,66,.22);
+      transition: .18s;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    .msg {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      font: 15px system-ui, -apple-system, Segoe UI, sans-serif;
+      display: none;
+      line-height: 1.45;
+    }
+
+    .msg.ok { display: block; color: #264a30; background: #eaf4ed; border: 1px solid #cce2d1; }
+    .msg.bad { display: block; color: #642c2c; background: #f7e9e9; border: 1px solid #ebcccc; }
+
+    .thanks { text-align: center; padding: 30px; display: none; }
+    .thanks h2 { font-size: 34px; font-weight: 400; margin: 0 0 10px; }
+    .thanks p { color: var(--muted); line-height: 1.5; margin: 0 auto; max-width: 430px; }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 0 30px 30px;
+      line-height: 1.45;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 12px; }
+      .card { border-radius: 26px; }
+      .top, form { padding-left: 20px; padding-right: 20px; }
+      .options { grid-template-columns: 1fr; }
+      .orn { letter-spacing: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="top">
+        <div class="orn">✦ ✧ ✦</div>
+        <div class="small">Confirmación de menú</div>
+        <h1>Sara & Oliver</h1>
+        <div class="date">21 de noviembre de 2025</div>
+        <p class="intro">Ayúdanos a organizar nuestro día especial indicando tu nombre, elección de menú y cualquier alergia o necesidad alimentaria.</p>
+      </div>
+
+      <form id="weddingForm">
+        <div class="field">
+          <label class="title" for="nombre">Nombre y apellidos</label>
+          <input id="nombre" name="nombre" type="text" placeholder="Ej. Ana García" required />
+          <div class="hint">Si confirmáis varias personas, rellena un formulario por cada invitado.</div>
+        </div>
+
+        <div class="field">
+          <label class="title">¿Qué menú prefieres?</label>
+          <div class="options">
+            <label class="option"><input type="radio" name="menu" value="Carne" required><span>🥩 Carne</span></label>
+            <label class="option"><input type="radio" name="menu" value="Pescado" required><span>🐟 Pescado</span></label>
+            <label class="option wide"><input type="radio" name="menu" value="Menú infantil"><span>👶 Menú infantil</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="title">¿Tienes alguna alergia, intolerancia o necesidad alimentaria?</label>
+          <div class="options">
+            <label class="option"><input type="radio" name="tieneAlergia" value="Sí" required><span>⚠️ Sí</span></label>
+            <label class="option"><input type="radio" name="tieneAlergia" value="No" required><span>✅ No</span></label>
+          </div>
+        </div>
+
+        <div class="field hidden" id="alergiaBox">
+          <label class="title" for="alergias">Indícanos cuál</label>
+          <textarea id="alergias" name="alergias" placeholder="Ej. Celiaquía, frutos secos, lactosa, marisco..."></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label class="title" for="observaciones">¿Hay algo más que debamos saber?</label>
+          <textarea id="observaciones" name="observaciones" placeholder="Ej. silla de bebé, movilidad reducida, otra observación..."></textarea>
+        </div>
+
+        <button class="btn" id="submitBtn" type="submit">Enviar respuesta</button>
+        <div id="msg" class="msg"></div>
+      </form>
+
+      <div class="thanks" id="thanks">
+        <h2>¡Gracias!</h2>
+        <p>Hemos recibido tu respuesta correctamente. Estamos deseando celebrar este día contigo.</p>
+      </div>
+
+      <div class="footer">Sara & Oliver · Nuestra boda</div>
+    </section>
+  </main>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEz1CQt2ujkT6llcKMfdAzoRWhky1Wet2SbqHcKM3cf4yoiRzxmUe1x4iHynd5qAyE/exec";
+
+    const form = document.getElementById('weddingForm');
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('msg');
+    const alergiaBox = document.getElementById('alergiaBox');
+    const alergias = document.getElementById('alergias');
+    const thanks = document.getElementById('thanks');
+
+    document.querySelectorAll('input[name="tieneAlergia"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const selected = document.querySelector('input[name="tieneAlergia"]:checked');
+        const show = selected && selected.value === 'Sí';
+        alergiaBox.classList.toggle('hidden', !show);
+        alergias.required = show;
+        if (!show) alergias.value = '';
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      msg.className = 'msg';
+      msg.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+
+      const data = new FormData(form);
+      data.append('fechaEnvio', new Date().toLocaleString('es-ES'));
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors'
+      })
+      .then(() => {
+        form.style.display = 'none';
+        thanks.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(() => {
+        msg.className = 'msg bad';
+        msg.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.';
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Enviar respuesta';
+      });
+    });
+  </script>
+</body>
+</html>
