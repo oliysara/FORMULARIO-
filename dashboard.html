@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de boda · Sara & Oliver</title>
+  <style>
+    :root{
+      --bg1:#fbf7f1; --bg2:#efe4d8; --card:#fffdf9; --text:#3a2f2a;
+      --muted:#75645a; --accent:#b98b6f; --accent2:#9c7159; --border:#e8d9cc;
+      --soft:#fff7ef; --ok:#4c7a58; --bad:#9b4d4d; --warn:#9a6b33;
+      --shadow:0 24px 70px rgba(70,45,28,.14);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; min-height:100vh; color:var(--text);
+      font-family: Georgia,'Times New Roman',serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(255,255,255,.92), transparent 34%),
+        radial-gradient(circle at 92% 92%, rgba(185,139,111,.22), transparent 30%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+      padding:22px;
+    }
+    .wrap{width:100%; max-width:1180px; margin:0 auto}
+    .card{
+      background:rgba(255,253,249,.95); border:1px solid var(--border); border-radius:34px;
+      box-shadow:var(--shadow); overflow:hidden; margin-bottom:18px;
+    }
+    .hero{padding:34px 28px 26px; text-align:center; position:relative}
+    .orn{font-size:20px; letter-spacing:10px; color:var(--accent); margin-bottom:12px}
+    .small{font:700 12px/1.2 system-ui,-apple-system,Segoe UI,sans-serif; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+    h1{font-size:clamp(38px,7vw,64px); font-weight:400; line-height:1.02; margin:0}
+    .intro{max-width:660px; margin:18px auto 0; color:var(--muted); line-height:1.55; font-size:16px}
+    .login{max-width:440px; margin:0 auto; padding:0 28px 34px}
+    label.title{display:block; font-size:18px; margin:0 0 10px; color:var(--text)}
+    input, select{
+      width:100%; border:1px solid var(--border); border-radius:18px; background:#fffaf6;
+      padding:15px 16px; font:16px system-ui,-apple-system,Segoe UI,sans-serif; color:#2e2926;
+      outline:none; transition:.2s;
+    }
+    input:focus,select:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(185,139,111,.13)}
+    .btn{
+      border:0; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white; padding:14px 20px; font:800 15px system-ui,-apple-system,Segoe UI,sans-serif;
+      cursor:pointer; box-shadow:0 14px 28px rgba(137,93,66,.22); transition:.18s; white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:#fffaf6; color:var(--accent2); border:1px solid var(--border); box-shadow:none}
+    .btn.full{width:100%; margin-top:14px}
+    .msg{display:none; margin-top:14px; padding:14px 16px; border-radius:18px; font:15px system-ui,-apple-system,Segoe UI,sans-serif; line-height:1.45}
+    .msg.bad{display:block; color:#642c2c; background:#f7e9e9; border:1px solid #ebcccc}
+    .msg.ok{display:block; color:#264a30; background:#eaf4ed; border:1px solid #cce2d1}
+    .dashboard{display:none}
+    .bar{display:flex; gap:12px; align-items:center; justify-content:space-between; padding:22px 28px; flex-wrap:wrap}
+    .barActions{display:flex; gap:10px; flex-wrap:wrap}
+    .last{font:14px system-ui,-apple-system,Segoe UI,sans-serif; color:var(--muted)}
+    .stats{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; padding:0 28px 28px}
+    .stat{
+      background:#fffaf6; border:1px solid var(--border); border-radius:24px; padding:20px 16px;
+      text-align:center; box-shadow:0 10px 24px rgba(120,80,50,.08);
+    }
+    .stat .num{font:900 38px/1 system-ui,-apple-system,Segoe UI,sans-serif; color:var(--accent2)}
+    .stat .label{margin-top:8px; color:var(--muted); font:700 14px system-ui,-apple-system,Segoe UI,sans-serif}
+    .panel{padding:28px}
+    .panel h2{font-size:30px; font-weight:400; margin:0 0 18px}
+    .twoCols{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .miniChart{height:18px; border-radius:999px; overflow:hidden; display:flex; background:#f0e2d5; border:1px solid var(--border)}
+    .seg{height:100%}.seg.carne{background:#b98b6f}.seg.pescado{background:#7f9eaa}.seg.infantil{background:#d8b56f}
+    .legend{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; font:14px system-ui,-apple-system,Segoe UI,sans-serif; color:var(--muted)}
+    .dot{display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:5px}.dot.carne{background:#b98b6f}.dot.pescado{background:#7f9eaa}.dot.infantil{background:#d8b56f}
+    .toolbar{display:flex; gap:12px; margin-bottom:18px; flex-wrap:wrap}
+    .toolbar input{flex:1; min-width:240px}.toolbar select{width:auto; min-width:170px}
+    .list{display:grid; gap:12px}
+    .person{background:#fffaf6; border:1px solid var(--border); border-radius:22px; padding:16px; font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+    .person strong{font-size:17px; color:var(--text)}
+    .tag{display:inline-block; margin-top:9px; margin-right:6px; padding:6px 10px; border-radius:999px; background:#f4e7dc; color:var(--accent2); font-size:13px; font-weight:800}
+    .tag.warn{background:#fff0de;color:var(--warn)}
+    .tableWrap{overflow:auto; border:1px solid var(--border); border-radius:22px; background:#fffaf6}
+    table{width:100%; border-collapse:collapse; font:14px system-ui,-apple-system,Segoe UI,sans-serif; min-width:780px}
+    th,td{padding:12px 14px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top}
+    th{background:#f7eee5; color:var(--muted); font-weight:900; position:sticky; top:0}
+    tr:last-child td{border-bottom:0}
+    .empty{padding:18px; background:#fffaf6; border:1px dashed var(--border); border-radius:20px; color:var(--muted); font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+    .footer{text-align:center; color:var(--muted); font-size:13px; padding:8px 28px 30px; line-height:1.45}
+    .footer a{color:var(--accent2); text-decoration:none; font-weight:700}
+    @media(max-width:980px){.stats{grid-template-columns:repeat(2,1fr)}.twoCols{grid-template-columns:1fr}}
+    @media(max-width:560px){body{padding:12px}.card{border-radius:26px}.hero,.panel,.bar,.stats{padding-left:20px;padding-right:20px}.stats{grid-template-columns:1fr}.orn{letter-spacing:7px}.toolbar select{width:100%}.btn{width:100%}.barActions{width:100%}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card" id="loginCard">
+      <div class="hero">
+        <div class="orn">✦ ✧ ✦</div>
+        <div class="small">Panel privado</div>
+        <h1>Sara & Oliver</h1>
+        <p class="intro">Panel de organización de menús, alergias y respuestas recibidas para vuestra boda.</p>
+      </div>
+      <div class="login">
+        <label class="title" for="password">Contraseña</label>
+        <input id="password" type="password" placeholder="Introduce la contraseña" autocomplete="current-password">
+        <button class="btn full" id="loginBtn">Entrar</button>
+        <div id="loginMsg" class="msg bad">Contraseña incorrecta.</div>
+      </div>
+    </section>
+
+    <section class="dashboard" id="dashboard">
+      <section class="card">
+        <div class="hero">
+          <div class="orn">✦ ✧ ✦</div>
+          <div class="small">Dashboard de boda</div>
+          <h1>Sara & Oliver</h1>
+          <p class="intro">Resumen actualizado de invitados, elección de menú y necesidades alimentarias.</p>
+        </div>
+        <div class="bar">
+          <div class="last" id="lastUpdate">Sin actualizar todavía</div>
+          <div class="barActions">
+            <button class="btn secondary" id="refreshBtn">Actualizar</button>
+            <button class="btn secondary" id="printBtn">Imprimir</button>
+            <button class="btn secondary" id="csvBtn">Descargar CSV</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num" id="total">0</div><div class="label">👥 Invitados</div></div>
+          <div class="stat"><div class="num" id="carne">0</div><div class="label">🥩 Carne</div></div>
+          <div class="stat"><div class="num" id="pescado">0</div><div class="label">🐟 Pescado</div></div>
+          <div class="stat"><div class="num" id="infantil">0</div><div class="label">👶 Infantil</div></div>
+          <div class="stat"><div class="num" id="alergiasTotal">0</div><div class="label">⚠️ Alergias</div></div>
+        </div>
+      </section>
+
+      <section class="twoCols">
+        <div class="card">
+          <div class="panel">
+            <h2>🍽️ Distribución de menús</h2>
+            <div class="miniChart" id="chart">
+              <div class="seg carne" id="segCarne"></div>
+              <div class="seg pescado" id="segPescado"></div>
+              <div class="seg infantil" id="segInfantil"></div>
+            </div>
+            <div class="legend">
+              <span><i class="dot carne"></i>Carne</span>
+              <span><i class="dot pescado"></i>Pescado</span>
+              <span><i class="dot infantil"></i>Infantil</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="panel">
+            <h2>⚠️ Personas con alergias</h2>
+            <div class="list" id="alergiasList"><div class="empty">Todavía no hay datos cargados.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="panel">
+          <h2>📋 Todas las respuestas</h2>
+          <div class="toolbar">
+            <input id="search" type="text" placeholder="Buscar por nombre, menú, alergia u observación...">
+            <select id="filterMenu">
+              <option value="">Todos los menús</option>
+              <option value="Carne">Carne</option>
+              <option value="Pescado">Pescado</option>
+              <option value="Menú infantil">Menú infantil</option>
+            </select>
+            <select id="filterAlergia">
+              <option value="">Todas las alergias</option>
+              <option value="Sí">Solo con alergia</option>
+              <option value="No">Sin alergia</option>
+            </select>
+          </div>
+          <div class="tableWrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th><th>Observaciones</th></tr></thead>
+              <tbody id="tableBody"><tr><td colspan="6">Introduce la contraseña para cargar los datos.</td></tr></tbody>
+            </table>
+          </div>
+          <div class="msg bad" id="errorMsg"></div>
+        </div>
+        <div class="footer"><a href="index.html">Volver al formulario</a> · Sara & Oliver · Nuestra boda</div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const PASSWORD = "boda2025";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEz1CQt2ujkT6llcKMfdAzoRWhky1Wet2SbqHcKM3cf4yoiRzxmUe1x4iHynd5qAyE/exec";
+    let allData = [];
+
+    const $ = (id) => document.getElementById(id);
+    $('loginBtn').addEventListener('click', login);
+    $('password').addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
+    $('refreshBtn').addEventListener('click', loadData);
+    $('printBtn').addEventListener('click', () => window.print());
+    $('csvBtn').addEventListener('click', downloadCSV);
+    $('search').addEventListener('input', applyFilters);
+    $('filterMenu').addEventListener('change', applyFilters);
+    $('filterAlergia').addEventListener('change', applyFilters);
+
+    function login(){
+      if($('password').value === PASSWORD){
+        $('loginCard').style.display = 'none';
+        $('dashboard').style.display = 'block';
+        loadData();
+      } else {
+        $('loginMsg').style.display = 'block';
+      }
+    }
+
+    async function loadData(){
+      $('errorMsg').style.display = 'none';
+      $('lastUpdate').textContent = 'Actualizando...';
+      try{
+        const res = await fetch(SCRIPT_URL + '?t=' + Date.now());
+        const text = await res.text();
+        let json;
+        try { json = JSON.parse(text); }
+        catch(err){ throw new Error('El Apps Script no está devolviendo JSON. Ahora devuelve: ' + text.slice(0,100)); }
+        allData = Array.isArray(json) ? json : [];
+        $('lastUpdate').textContent = 'Actualizado: ' + new Date().toLocaleString('es-ES');
+        render(allData);
+      } catch(e){
+        $('lastUpdate').textContent = 'No se pudieron cargar los datos';
+        $('errorMsg').textContent = 'Error al cargar datos: ' + e.message + '. Revisa que Apps Script tenga doGet devolviendo JSON.';
+        $('errorMsg').style.display = 'block';
+      }
+    }
+
+    function normalize(item){
+      return {
+        fecha: item.fecha || item.Fecha || '',
+        nombre: item.nombre || item.Nombre || '',
+        menu: item.menu || item.Menú || item.Menu || '',
+        tieneAlergia: item.tieneAlergia || item['Tiene alergia'] || item.alergia || '',
+        alergias: item.alergias || item.Alergias || '',
+        observaciones: item.observaciones || item.Observaciones || ''
+      };
+    }
+
+    function applyFilters(){
+      const q = $('search').value.toLowerCase().trim();
+      const menu = $('filterMenu').value;
+      const alergia = $('filterAlergia').value;
+      let data = allData.map(normalize);
+      if(menu) data = data.filter(x => x.menu === menu);
+      if(alergia) data = data.filter(x => x.tieneAlergia === alergia);
+      if(q) data = data.filter(x => [x.nombre,x.menu,x.tieneAlergia,x.alergias,x.observaciones].some(v => String(v).toLowerCase().includes(q)));
+      render(data, false);
+    }
+
+    function render(data, updateStats = true){
+      const clean = data.map(normalize);
+      if(updateStats){
+        const base = allData.map(normalize);
+        const total = base.length;
+        const carne = base.filter(x=>x.menu==='Carne').length;
+        const pescado = base.filter(x=>x.menu==='Pescado').length;
+        const infantil = base.filter(x=>x.menu==='Menú infantil').length;
+        const alergias = base.filter(x=>x.tieneAlergia==='Sí').length;
+        $('total').textContent = total; $('carne').textContent = carne; $('pescado').textContent = pescado; $('infantil').textContent = infantil; $('alergiasTotal').textContent = alergias;
+        const denom = Math.max(total,1);
+        $('segCarne').style.width = (carne/denom*100)+'%';
+        $('segPescado').style.width = (pescado/denom*100)+'%';
+        $('segInfantil').style.width = (infantil/denom*100)+'%';
+        renderAllergies(base);
+      }
+      renderTable(clean);
+    }
+
+    function renderAllergies(data){
+      const alergias = data.filter(x=>x.tieneAlergia==='Sí');
+      if(!alergias.length){ $('alergiasList').innerHTML = '<div class="empty">No hay alergias registradas.</div>'; return; }
+      $('alergiasList').innerHTML = alergias.map(x => `<div class="person"><strong>${esc(x.nombre)}</strong><br><span class="tag">${esc(x.menu)}</span><span class="tag warn">⚠️ ${esc(x.alergias || 'Sin detalle')}</span>${x.observaciones ? `<br><span class="tag">${esc(x.observaciones)}</span>` : ''}</div>`).join('');
+    }
+
+    function renderTable(data){
+      if(!data.length){ $('tableBody').innerHTML = '<tr><td colspan="6">No hay respuestas que coincidan.</td></tr>'; return; }
+      $('tableBody').innerHTML = data.map(x => `<tr><td>${esc(formatDate(x.fecha))}</td><td>${esc(x.nombre)}</td><td>${esc(x.menu)}</td><td>${esc(x.tieneAlergia)}</td><td>${esc(x.alergias)}</td><td>${esc(x.observaciones)}</td></tr>`).join('');
+    }
+
+    function downloadCSV(){
+      const rows = [['Fecha','Nombre','Menú','Tiene alergia','Alergias','Observaciones'], ...allData.map(normalize).map(x=>[formatDate(x.fecha),x.nombre,x.menu,x.tieneAlergia,x.alergias,x.observaciones])];
+      const csv = rows.map(r => r.map(v => '"' + String(v ?? '').replaceAll('"','""') + '"').join(';')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'respuestas-boda-sara-oliver.csv'; a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function formatDate(value){
+      if(!value) return '';
+      const d = new Date(value);
+      if(isNaN(d)) return String(value);
+      return d.toLocaleDateString('es-ES') + ' ' + d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    }
+    function esc(str){return String(str ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');}
+  </script>
+</body>
+</html>
