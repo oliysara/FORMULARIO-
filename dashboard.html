@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Boda - Sara & Oliver</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap dashWrap">
+    <section class="card">
+      <div class="top">
+        <div class="orn">✦ ✧ ✦</div>
+        <div class="small">Panel privado</div>
+        <h1>Resumen boda</h1>
+        <p class="intro">Totales de menú, alergias y listado de respuestas.</p>
+      </div>
+
+      <section id="login" class="dashPad">
+        <label class="title" for="password">Contraseña</label>
+        <input id="password" type="password" placeholder="Introduce la contraseña" />
+        <button class="btn" id="loginBtn">Entrar</button>
+        <div id="loginMsg" class="msg"></div>
+      </section>
+
+      <section id="dashboard" class="dashPad hidden">
+        <button class="btn secondary" id="refreshBtn">Actualizar datos</button>
+        <div class="stats" id="stats"></div>
+
+        <div class="field">
+          <label class="title" for="search">Buscar invitado</label>
+          <input id="search" type="text" placeholder="Buscar por nombre, menú o alergia..." />
+        </div>
+
+        <h2 class="sectionTitle">⚠️ Personas con alergias</h2>
+        <div id="allergyList" class="list"></div>
+
+        <h2 class="sectionTitle">📋 Todas las respuestas</h2>
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr><th>Fecha</th><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th><th>Observaciones</th></tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div id="dashMsg" class="msg"></div>
+      </section>
+
+      <div class="footer"><a href="index.html">Volver al formulario</a> · Sara & Oliver</div>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
