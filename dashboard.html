@@ -4,53 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Boda - Sara & Oliver</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root{--bg1:#fbf7f1;--bg2:#efe4d8;--card:#fffdf9;--text:#3a2f2a;--muted:#75645a;--accent:#b98b6f;--accent2:#9c7159;--border:#e8d9cc;--ok:#4c7a58;--bad:#9b4d4d;--warn:#a06a2a}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));padding:22px}.wrap{max-width:1150px;margin:0 auto}.hero{text-align:center;margin:18px 0 26px}.small{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(34px,6vw,58px);margin:8px 0 6px}.subtitle{color:var(--muted);margin:0}.login,.panel{background:rgba(255,253,249,.95);border:1px solid var(--border);border-radius:28px;box-shadow:0 24px 70px rgba(70,45,28,.13);padding:26px}.login{max-width:440px;margin:40px auto}.field{margin:16px 0}label{display:block;font-weight:700;margin-bottom:8px}input,select{width:100%;border:1px solid var(--border);border-radius:16px;background:#fffaf6;padding:14px 15px;font-size:16px}.btn{border:0;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:13px 20px;font-weight:800;cursor:pointer;box-shadow:0 12px 24px rgba(137,93,66,.20)}.btn.secondary{background:#fffaf6;color:var(--text);border:1px solid var(--border);box-shadow:none}.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}.actions{display:flex;gap:10px;flex-wrap:wrap}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}.stat{background:#fffaf6;border:1px solid var(--border);border-radius:22px;padding:18px}.stat .num{font-size:34px;font-weight:900;line-height:1}.stat .lbl{margin-top:6px;color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}.box{background:#fffaf6;border:1px solid var(--border);border-radius:22px;padding:18px}h2{font-family:Georgia,'Times New Roman',serif;font-weight:400;margin:0 0 12px;font-size:28px}.tableWrap{overflow:auto;border-radius:18px;border:1px solid var(--border)}table{width:100%;border-collapse:collapse;background:#fff}th,td{text-align:left;padding:12px;border-bottom:1px solid #eee1d7;font-size:14px;vertical-align:top}th{background:#f5eadf;color:#4a3c34;position:sticky;top:0}tr:last-child td{border-bottom:0}.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#f0e3d8;font-weight:700;font-size:12px}.badge.ok{background:#eaf4ed;color:#264a30}.badge.warn{background:#fff0d8;color:#6a3d12}.badge.bad{background:#f7e9e9;color:#642c2c}.list{display:grid;gap:10px}.person{border:1px solid var(--border);background:#fff;border-radius:18px;padding:13px}.person strong{display:block}.person span{display:block;color:var(--muted);font-size:14px;margin-top:3px}.empty{color:var(--muted);font-style:italic}.msg{margin-top:12px;padding:12px;border-radius:16px;display:none}.msg.bad{display:block;background:#f7e9e9;color:#642c2c}.hidden{display:none!important}.chart{height:16px;border-radius:999px;overflow:hidden;display:flex;background:#eee;margin:10px 0 4px}.seg{height:100%}.seg.carne{background:#9c7159}.seg.pescado{background:#6f879c}.seg.infantil{background:#d5a65f}.legend{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:10px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}.footer{text-align:center;color:var(--muted);font-size:13px;margin:18px 0 0}@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:560px){body{padding:12px}.login,.panel{padding:18px;border-radius:22px}.cards{grid-template-columns:1fr}.topbar{align-items:stretch}.actions,.actions .btn{width:100%}.btn{width:100%}th,td{font-size:13px;padding:10px}}
+  </style>
 </head>
 <body>
-  <main class="wrap dashWrap">
-    <section class="card">
-      <div class="top">
-        <div class="orn">✦ ✧ ✦</div>
-        <div class="small">Panel privado</div>
-        <h1>Resumen boda</h1>
-        <p class="intro">Totales de menú, alergias y listado de respuestas.</p>
-      </div>
-
-      <section id="login" class="dashPad">
-        <label class="title" for="password">Contraseña</label>
-        <input id="password" type="password" placeholder="Introduce la contraseña" />
-        <button class="btn" id="loginBtn">Entrar</button>
-        <div id="loginMsg" class="msg"></div>
-      </section>
-
-      <section id="dashboard" class="dashPad hidden">
-        <button class="btn secondary" id="refreshBtn">Actualizar datos</button>
-        <div class="stats" id="stats"></div>
-
-        <div class="field">
-          <label class="title" for="search">Buscar invitado</label>
-          <input id="search" type="text" placeholder="Buscar por nombre, menú o alergia..." />
-        </div>
-
-        <h2 class="sectionTitle">⚠️ Personas con alergias</h2>
-        <div id="allergyList" class="list"></div>
-
-        <h2 class="sectionTitle">📋 Todas las respuestas</h2>
-        <div class="tableWrap">
-          <table>
-            <thead>
-              <tr><th>Fecha</th><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th><th>Observaciones</th></tr>
-            </thead>
-            <tbody id="rows"></tbody>
-          </table>
-        </div>
-        <div id="dashMsg" class="msg"></div>
-      </section>
-
-      <div class="footer"><a href="index.html">Volver al formulario</a> · Sara & Oliver</div>
+  <div class="wrap">
+    <div class="hero"><div class="small">Panel de control</div><h1>Sara & Oliver</h1><p class="subtitle">Resumen de respuestas de la boda</p></div>
+    <section id="login" class="login"><h2>Acceso privado</h2><p class="subtitle">Introduce la contraseña para ver el resumen.</p><div class="field"><label for="pass">Contraseña</label><input id="pass" type="password" placeholder="Contraseña" /></div><button class="btn" id="loginBtn">Entrar</button><div id="loginMsg" class="msg bad">Contraseña incorrecta.</div></section>
+    <section id="panel" class="panel hidden">
+      <div class="topbar"><div><h2>Dashboard</h2><p class="subtitle" id="lastUpdate">Cargando datos...</p></div><div class="actions"><button class="btn secondary" id="refreshBtn">Actualizar</button><button class="btn secondary" id="csvBtn">Descargar CSV</button></div></div>
+      <div class="cards"><div class="stat"><div class="num" id="total">0</div><div class="lbl">👥 Invitados</div></div><div class="stat"><div class="num" id="carne">0</div><div class="lbl">🥩 Carne</div></div><div class="stat"><div class="num" id="pescado">0</div><div class="lbl">🐟 Pescado</div></div><div class="stat"><div class="num" id="infantil">0</div><div class="lbl">👶 Infantil</div></div><div class="stat"><div class="num" id="alergiasCount">0</div><div class="lbl">⚠️ Alergias</div></div></div>
+      <div class="box"><h2>Distribución de menús</h2><div class="chart"><div class="seg carne" id="segCarne"></div><div class="seg pescado" id="segPescado"></div><div class="seg infantil" id="segInfantil"></div></div><div class="legend"><span><i class="dot" style="background:#9c7159"></i>Carne</span><span><i class="dot" style="background:#6f879c"></i>Pescado</span><span><i class="dot" style="background:#d5a65f"></i>Infantil</span></div></div>
+      <div class="grid"><div class="box"><div class="topbar"><h2>Todos los invitados</h2><input id="search" type="text" placeholder="Buscar por nombre, menú o alergia..." style="max-width:340px"></div><div class="tableWrap"><table><thead><tr><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th><th>Observaciones</th></tr></thead><tbody id="tbody"></tbody></table></div></div><div class="box"><h2>⚠️ Personas con alergias</h2><div id="allergyList" class="list"></div></div></div>
+      <div class="footer">Sara & Oliver · Dashboard privado</div>
     </section>
-  </main>
-  <script src="config.js"></script>
-  <script src="dashboard.js"></script>
+  </div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEz1CQt2ujkT6llcKMfdAzoRWhky1Wet2SbqHcKM3cf4yoiRzxmUe1x4iHynd5qAyE/exec";
+const DASHBOARD_PASSWORD = "boda2025";
+let rows = [];
+const $ = id => document.getElementById(id);
+$('loginBtn').addEventListener('click', login);
+$('pass').addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
+$('refreshBtn').addEventListener('click', loadData);
+$('csvBtn').addEventListener('click', downloadCSV);
+$('search').addEventListener('input', renderTable);
+function login(){ if($('pass').value === DASHBOARD_PASSWORD){ $('login').classList.add('hidden'); $('panel').classList.remove('hidden'); loadData(); } else { $('loginMsg').style.display='block'; }}
+async function loadData(){ $('lastUpdate').textContent = 'Cargando datos...'; try{ const res = await fetch(SCRIPT_URL + '?t=' + Date.now()); rows = await res.json(); rows = rows.filter(r => r && (r.nombre || r.menu)); render(); $('lastUpdate').textContent = 'Actualizado: ' + new Date().toLocaleString('es-ES'); } catch(err){ $('lastUpdate').textContent = 'No se pudieron cargar los datos. Revisa Apps Script.'; console.error(err); }}
+function norm(v){ return (v || '').toString().trim(); }
+function render(){ const total=rows.length; const carne=rows.filter(r=>norm(r.menu)==='Carne').length; const pescado=rows.filter(r=>norm(r.menu)==='Pescado').length; const infantil=rows.filter(r=>norm(r.menu)==='Menú infantil').length; const al=rows.filter(r=>norm(r.tieneAlergia)==='Sí').length; $('total').textContent=total; $('carne').textContent=carne; $('pescado').textContent=pescado; $('infantil').textContent=infantil; $('alergiasCount').textContent=al; $('segCarne').style.width = total ? (carne/total*100)+'%' : '0%'; $('segPescado').style.width = total ? (pescado/total*100)+'%' : '0%'; $('segInfantil').style.width = total ? (infantil/total*100)+'%' : '0%'; renderTable(); renderAllergies(); }
+function badgeMenu(menu){ const cls = menu==='Carne'?'':menu==='Pescado'?'ok':'warn'; return `<span class="badge ${cls}">${escapeHtml(menu || '-')}</span>`; }
+function badgeAllergy(v){ return norm(v)==='Sí' ? '<span class="badge bad">Sí</span>' : '<span class="badge ok">No</span>'; }
+function renderTable(){ const q = norm($('search').value).toLowerCase(); const filtered = rows.filter(r => [r.nombre,r.menu,r.tieneAlergia,r.alergias,r.observaciones].join(' ').toLowerCase().includes(q)); $('tbody').innerHTML = filtered.map(r => `<tr><td><strong>${escapeHtml(r.nombre)}</strong></td><td>${badgeMenu(norm(r.menu))}</td><td>${badgeAllergy(r.tieneAlergia)}</td><td>${escapeHtml(r.alergias || '')}</td><td>${escapeHtml(r.observaciones || '')}</td></tr>`).join('') || `<tr><td colspan="5" class="empty">No hay resultados.</td></tr>`; }
+function renderAllergies(){ const al = rows.filter(r => norm(r.tieneAlergia)==='Sí'); $('allergyList').innerHTML = al.map(r => `<div class="person"><strong>${escapeHtml(r.nombre)}</strong><span>Menú: ${escapeHtml(r.menu || '-')}</span><span>Alergia/necesidad: ${escapeHtml(r.alergias || '-')}</span><span>Obs.: ${escapeHtml(r.observaciones || '-')}</span></div>`).join('') || '<p class="empty">No hay alergias registradas.</p>'; }
+function downloadCSV(){ const header=['Fecha','Nombre','Menú','Tiene alergia','Alergias','Observaciones']; const lines=[header, ...rows.map(r=>[r.fecha,r.nombre,r.menu,r.tieneAlergia,r.alergias,r.observaciones])].map(arr=>arr.map(v=>'"'+(v??'').toString().replaceAll('"','""')+'"').join(',')); const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='respuestas_boda.csv'; a.click(); URL.revokeObjectURL(url); }
+function escapeHtml(str){ return (str ?? '').toString().replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c])); }
+</script>
 </body>
 </html>
