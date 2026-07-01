@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sara & Oliver · Wedding Planner</title>
+<style>
+:root{
+  --bg:#fbf5ee;--card:#fffdf9;--text:#2f2119;--muted:#7b6b62;--line:#ead8c8;
+  --peach:#df805b;--green:#5eb96b;--blue:#6f9bc4;--yellow:#f2bc3d;--orange:#e87d31;--purple:#8d55d7;--red:#d9585c;
+  --shadow:0 16px 34px rgba(91,62,39,.10);--serif:Georgia,"Times New Roman",serif;--ui:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#fffaf6,#f5eadf);color:var(--text);font-family:var(--ui);padding:8px}
+button,input,select,textarea{font-family:var(--ui)}button{cursor:pointer}
+.app{max-width:1510px;margin:0 auto}
+.topbar{
+  min-height:104px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:18px 28px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255,255,255,.96), transparent 34%),
+    linear-gradient(135deg, rgba(255,253,249,.98), rgba(255,247,240,.92));
+  border:1px solid rgba(234,216,200,.96);
+  border-radius:26px;
+  box-shadow:0 18px 46px rgba(91,62,39,.12);
+  margin-bottom:26px;
+  position:sticky;
+  top:8px;
+  z-index:5;
+  backdrop-filter:blur(18px);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  min-width:292px;
+}
+.leaf{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#b97859;
+  font-size:32px;
+  background:linear-gradient(145deg,#fff7ef,#f2d7c7);
+  border:1px solid #edd6c6;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 10px 22px rgba(141,75,45,.11);
+}
+.brand-title{
+  font-family:"Brush Script MT","Segoe Script",cursive;
+  font-size:38px;
+  line-height:.95;
+  color:#2f2119;
+}
+.brand-date{
+  font-family:var(--serif);
+  letter-spacing:2.2px;
+  font-size:12px;
+  margin-top:7px;
+  color:#8d4b2d;
+  text-transform:uppercase;
+}
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  font-weight:800;
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:7px;
+  background:rgba(255,250,246,.72);
+  border:1px solid rgba(234,216,200,.7);
+  border-radius:999px;
+}
+.nav button{
+  color:#5d4b41;
+  background:transparent;
+  border:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 15px;
+  position:relative;
+  font-size:14px;
+  border-radius:999px;
+  transition:.18s ease;
+}
+.nav button:hover{
+  background:#fff7f0;
+  color:#8d4b2d;
+}
+.nav button.active{
+  color:white;
+  background:linear-gradient(135deg,#b97859,#8d4b2d);
+  box-shadow:0 10px 22px rgba(141,75,45,.20);
+}
+.nav button.active:after{display:none}
+.page{display:none}.page.active{display:block}
+.grid-home{display:grid;grid-template-columns:1.28fr .85fr .85fr;gap:20px}
+.card,.panel{background:rgba(255,253,249,.94);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:20px}
+.panel{margin-bottom:20px}
+.title{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:24px;margin:0 0 18px}
+.icon-round{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#faeadf;color:#c66d44;font-size:21px;flex:0 0 auto}
+.count-card{min-height:322px;text-align:center;background:linear-gradient(145deg,#fffdf9,#fff6f0)}.heart{color:#df805b;font-size:22px;margin-bottom:6px}
+.count-label{font-family:var(--serif);color:#c66d44;text-transform:uppercase;letter-spacing:3px;font-size:17px;margin:6px 0 28px}
+.count-row{display:grid;grid-template-columns:repeat(4,1fr);max-width:565px;margin:0 auto 24px}
+.count-unit{position:relative}.count-unit:not(:last-child):after{content:"";position:absolute;right:0;top:12px;height:50px;border-right:1px solid #e9baa6}
+.count-num{font-family:var(--serif);font-size:54px;line-height:1}.count-name{font-family:var(--serif);text-transform:uppercase;letter-spacing:2px;margin-top:8px;font-size:13px}
+.date-line{font-family:var(--serif);font-size:18px;margin:20px 0}.script{font-family:"Segoe Script","Brush Script MT",cursive;color:#df805b;font-size:25px;margin-top:14px}
+.progress-layout{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center}
+.donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--green) 0 0%, #e5e2de 0% 100%);display:grid;place-items:center;box-shadow:inset 0 0 0 18px #fffdf9}
+.donut span{font-family:var(--serif);font-size:36px;font-weight:700}
+.legend{display:grid;gap:14px}.legend-row{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:10px;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%}.mini-progress,.tinybar{height:7px;background:#e7e2dd;border-radius:999px;overflow:hidden}.mini-progress span,.tinybar span{display:block;height:100%;border-radius:999px}
+.empty-box{height:198px;border:1px solid #efd496;background:linear-gradient(145deg,#fffdf7,#fff3ca);border-radius:12px;display:grid;place-items:center;text-align:center;padding:22px;margin-top:18px}
+.empty-icon{width:50px;height:50px;border-radius:50%;background:#f8dea7;display:grid;place-items:center;margin:0 auto 16px;color:#9b6b22;font-size:25px}
+.two-col{display:grid;grid-template-columns:1fr 1.32fr;gap:20px;margin-top:20px}.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.stat-card{background:rgba(255,253,249,.94);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:18px;min-height:150px}
+.stat-title{display:flex;align-items:center;gap:10px;font-weight:800;font-size:13px}.stat-icon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eaf6ed;color:#28974b;font-size:20px}
+.stat-value{font-family:var(--serif);font-size:28px;margin:18px 0 8px}.stat-desc{color:#6d5e54;font-size:14px}
+.menu-bar{height:40px;display:grid;grid-template-columns:1fr 1fr 1fr;border-radius:10px;overflow:hidden;margin:24px 0 24px}.menu-bar div{display:grid;place-items:center;color:white;font-weight:800;font-size:17px}
+.menu-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.menu-head{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:17px}.menu-count{color:#6d5e54;padding-left:20px;font-size:14px;margin-top:7px}
+.toolbar{display:grid;grid-template-columns:1fr 200px 200px 170px 160px;gap:12px;margin-bottom:16px}.toolbar.simple{grid-template-columns:1fr 220px 220px}
+input,select,textarea{width:100%;border:1px solid var(--line);background:#fffaf6;color:var(--text);border-radius:10px;padding:13px 14px;outline:0;font-size:15px}textarea{min-height:90px;resize:vertical}
+table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;font-size:14px}th,td{padding:13px;border-bottom:1px solid #efe3d8;text-align:left;vertical-align:middle}th{background:#f6ede4;font-weight:800;font-family:var(--serif)}tr:last-child td{border-bottom:0}
+.menu-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px}
+.btn{border:1px solid var(--line);background:#fff7f0;color:#8d4b2d;padding:11px 18px;border-radius:999px;font-weight:800;cursor:pointer}.btn.primary{background:#8d4b2d;color:white;border-color:#8d4b2d}.btn.green{background:#eaf6ed;color:#2d7f43;border-color:#bee3c5}.btn.small{padding:8px 12px;font-size:12px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.list{display:grid;gap:10px}.row-card{background:#fffaf6;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:9px}.row-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}.chips{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#f4e7dc;color:#8d4b2d;padding:6px 10px;font-size:12px;font-weight:900;white-space:nowrap}.tag.green{background:#e9f3ec;color:#2f5c3a}.tag.red{background:#f7e8e7;color:#793631}.tag.amber{background:#fff0d8;color:#7b531c}.tag.blue{background:#e7eef3;color:#405c6d}.tag.purple{background:#f1e8ff;color:#874ce0}
+.menu-card,.table-card{background:#fffaf6;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}.menu-card h3,.table-card h3{font-family:var(--serif);font-size:25px;margin:0 0 12px}.menu-card .big{font-size:42px;font-weight:950;color:#8d4b2d}.menu-list{display:grid;gap:8px;margin-top:14px}.menu-person{background:rgba(255,253,249,.85);border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:750}
+.table-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.guest-pill{display:inline-flex;align-items:center;gap:6px;margin:4px 4px 0 0;background:#f4e7dc;color:#8d4b2d;padding:7px 10px;border-radius:999px;font-size:13px;font-weight:900}
+.quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.modal{position:fixed;inset:0;background:rgba(43,31,24,.38);display:none;place-items:center;padding:18px;z-index:20}.modal.open{display:grid}.modal-card{width:min(680px,100%);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:24px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.wide{grid-column:1/-1}
+.footer{text-align:center;padding:30px 0 10px;color:#6d5e54;font-family:var(--serif)}.footer a{color:#5d3c2d}.toast{position:fixed;right:18px;bottom:18px;background:#2d251f;color:white;border-radius:14px;padding:13px 16px;display:none;box-shadow:0 18px 40px rgba(0,0,0,.22);z-index:30}
+@media(max-width:1200px){.grid-home,.two-col,.section-grid,.table-board{grid-template-columns:1fr}.toolbar,.toolbar.simple{grid-template-columns:1fr}.topbar{align-items:flex-start}}
+@media(max-width:760px){body{padding:6px}.topbar{display:block;padding:16px;border-radius:22px}.brand{min-width:0}.brand-title{font-size:34px}.nav{justify-content:flex-start;gap:8px;margin-top:16px;border-radius:18px;padding:8px}.count-row{grid-template-columns:repeat(2,1fr);gap:22px}.count-unit:after{display:none}.progress-layout{grid-template-columns:1fr;justify-items:center}.stats-row{grid-template-columns:1fr}.menu-legend{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+
+#loginOverlay{position:fixed;inset:0;background:linear-gradient(135deg,#fbf5ee,#f5eadf);display:flex;align-items:center;justify-content:center;z-index:9999}
+#loginCard{background:#fffdf9;border:1px solid #ead8c8;border-radius:20px;padding:40px;box-shadow:0 20px 50px rgba(0,0,0,.12);width:min(420px,90vw);text-align:center}
+#loginCard h1{margin:0;font-family:Georgia,serif;color:#8d4b2d}
+#loginCard p{color:#6d5e54}
+#loginCard input{margin:18px 0}
+#loginError{color:#b3261e;display:none;margin-top:10px;font-weight:700}
+
+
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.summary-card{background:#fffaf6;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.summary-card .num{font-family:var(--serif);font-size:30px;color:#8d4b2d;margin-top:8px}
+.summary-card .label{color:#6d5e54;font-size:13px;font-weight:800}
+.pro-actions{display:flex;gap:8px;flex-wrap:wrap}
+.backup-input{display:none}
+.print-card{background:white;border:1px solid #ead8c8;border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.manual-row{display:grid;grid-template-columns:1fr 180px 160px;gap:10px;align-items:center}
+.status-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+@media(max-width:760px){.summary-cards{grid-template-columns:1fr}.manual-row{grid-template-columns:1fr}}
+@media print{
+  body{background:white;padding:0}
+  .topbar,.footer,#loginOverlay,.nav,.btn,.quick-filters,.toolbar,#inicio,#invitados,#finanzas,#mesas,#alertas,#seguimiento,#tareas{display:none!important}
+  #restaurante{display:block!important}
+  .page{display:block!important}
+  .panel,.card,.menu-card{box-shadow:none!important}
+}
+
+
+.nav-shell{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  flex:1;
+}
+.nav-arrow{
+  width:38px;
+  height:38px;
+  flex:0 0 auto;
+  border:1px solid rgba(234,216,200,.95);
+  background:linear-gradient(145deg,#fffdf9,#fff3ea);
+  color:#8d4b2d;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(91,62,39,.10);
+  transition:.18s ease;
+}
+.nav-arrow:hover{
+  transform:translateY(-1px);
+  background:#fff7f0;
+}
+.nav-arrow:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+  transform:none;
+}
+.nav-wrap{
+  position:relative;
+  min-width:0;
+  flex:1;
+}
+.nav-wrap:before,
+.nav-wrap:after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:34px;
+  z-index:2;
+  pointer-events:none;
+}
+.nav-wrap:before{
+  left:0;
+  background:linear-gradient(90deg,rgba(255,250,246,.95),rgba(255,250,246,0));
+}
+.nav-wrap:after{
+  right:0;
+  background:linear-gradient(270deg,rgba(255,250,246,.95),rgba(255,250,246,0));
+}
+.nav{
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.header-mini-stats{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  margin-left:auto;
+}
+.header-pill{
+  background:#fffaf6;
+  border:1px solid rgba(234,216,200,.95);
+  color:#6d5e54;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.header-pill strong{color:#8d4b2d}
+@media(max-width:1200px){
+  .topbar{display:grid;grid-template-columns:1fr;gap:14px}
+  .nav-shell{width:100%}
+  .header-mini-stats{justify-content:flex-start;margin-left:0}
+}
+@media(max-width:760px){
+  .nav-arrow{width:34px;height:34px}
+  .nav-wrap:before,.nav-wrap:after{width:22px}
+  .header-mini-stats{display:none}
+}
+
+
+.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  min-height:82px;
+  padding:18px 28px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255,255,255,.96), transparent 34%),
+    linear-gradient(135deg, rgba(255,253,249,.98), rgba(255,247,240,.92));
+  border:1px solid rgba(234,216,200,.96);
+  border-radius:26px;
+  box-shadow:0 18px 46px rgba(91,62,39,.12);
+  margin-bottom:12px;
+  position:sticky;
+  top:8px;
+  z-index:6;
+  backdrop-filter:blur(18px);
+}
+.app-brandline{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  min-width:0;
+}
+.app-date{
+  font-family:var(--serif);
+  color:#8d4b2d;
+  font-size:15px;
+  letter-spacing:.8px;
+  white-space:nowrap;
+}
+.subnav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:12px;
+  background:rgba(255,253,249,.88);
+  border:1px solid rgba(234,216,200,.88);
+  border-radius:22px;
+  box-shadow:0 12px 30px rgba(91,62,39,.08);
+  margin-bottom:24px;
+  position:sticky;
+  top:104px;
+  z-index:5;
+  backdrop-filter:blur(16px);
+}
+.subnav button{
+  border:1px solid transparent;
+  background:transparent;
+  color:#5d4b41;
+  border-radius:999px;
+  padding:11px 16px;
+  font-weight:850;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  transition:.18s ease;
+}
+.subnav button:hover{
+  background:#fff7f0;
+  color:#8d4b2d;
+  border-color:#ead8c8;
+}
+.subnav button.active{
+  background:linear-gradient(135deg,#b97859,#8d4b2d);
+  color:white;
+  box-shadow:0 10px 22px rgba(141,75,45,.18);
+}
+@media(max-width:1200px){
+  .app-header{position:relative;top:0;display:grid;grid-template-columns:1fr;gap:12px}
+  .app-date{white-space:normal}
+  .header-mini-stats{justify-content:flex-start;margin-left:0}
+  .subnav{position:relative;top:0;justify-content:flex-start}
+}
+@media(max-width:760px){
+  .app-header{padding:16px;border-radius:22px}
+  .app-brandline{gap:12px}
+  .app-date{font-size:13px}
+  .subnav{border-radius:18px;gap:6px;padding:8px}
+  .subnav button{font-size:13px;padding:10px 12px}
+}
+
+
+.expense-form{display:grid;grid-template-columns:1fr 160px 170px 120px;gap:10px;margin-bottom:16px}
+.balance-card{background:linear-gradient(145deg,#fffdf9,#fff6f0);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.balance-card .big{font-family:var(--serif);font-size:34px;color:#8d4b2d;margin-top:8px}
+@media(max-width:760px){.expense-form{grid-template-columns:1fr}}
+
+
+.economy-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.money-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.money-table th,.money-table td{padding:12px;border-bottom:1px solid #efe3d8;text-align:left}
+.money-table tr:last-child td{border-bottom:0}
+.status-paid{background:#e9f3ec;color:#2f5c3a}
+.status-partial{background:#fff0d8;color:#7b531c}
+.status-pending{background:#f7e8e7;color:#793631}
+.economy-form{display:grid;grid-template-columns:1.2fr 140px 140px 150px 1fr 110px;gap:10px;margin-bottom:16px}
+.savings-form{display:grid;grid-template-columns:1.2fr 160px 170px 110px;gap:10px;margin-bottom:16px}
+.economy-note{color:#6d5e54;line-height:1.55;margin-top:0}
+@media(max-width:1000px){.economy-grid{grid-template-columns:1fr}.economy-form,.savings-form{grid-template-columns:1fr}}
+
+
+.tracking-board{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.tracking-box{
+  background:#fffaf6;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.tracking-box h3{
+  font-family:var(--serif);
+  font-size:22px;
+  margin:0 0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+@media(max-width:900px){.tracking-board{grid-template-columns:1fr}}
+
+
+.side-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:12px 0 16px;
+}
+.side-filters .active{
+  background:linear-gradient(135deg,#b97859,#8d4b2d);
+  color:white;
+  box-shadow:0 10px 22px rgba(141,75,45,.16);
+}
+.invita-select{
+  min-width:105px;
+  padding:9px 10px;
+  font-size:13px;
+}
+
+
+.side-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:12px 0 16px;
+}
+.side-filters .active{
+  background:linear-gradient(135deg,#b97859,#8d4b2d);
+  color:white;
+  box-shadow:0 10px 22px rgba(141,75,45,.16);
+}
+.tracking-board{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.tracking-box{
+  background:#fffaf6;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.tracking-box h3{
+  font-family:var(--serif);
+  font-size:22px;
+  margin:0 0 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.tracking-compact-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+.tracking-chip{
+  display:inline-grid;
+  grid-template-columns:auto minmax(80px,1fr) auto auto;
+  align-items:center;
+  gap:7px;
+  min-height:36px;
+  max-width:100%;
+  background:#fffdf9;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:6px 8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.04);
+}
+.tracking-chip select{
+  width:45px;
+  padding:4px 5px;
+  border-radius:999px;
+  font-size:12px;
+}
+.tracking-chip-name{
+  font-size:13px;
+  font-weight:850;
+  color:#4d3b31;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.tracking-action{
+  border:0;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.tracking-action.done{background:#e9f3ec;color:#2f5c3a}
+.tracking-action.pending{background:#fff0d8;color:#7b531c}
+.tracking-action.delete{background:#f7e8e7;color:#793631}
+@media(max-width:900px){.tracking-board{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="loginOverlay">
+  <div id="loginCard">
+    <h1>♡ Sara & Oliver ♡</h1>
+    <p>Panel privado</p>
+    <input id="loginPassword" type="password" placeholder="Contraseña">
+    <button class="btn primary" onclick="checkLogin()">Entrar</button>
+    <div id="loginError">Contraseña incorrecta</div>
+  </div>
+</div>
+
+<div class="app">
+<header class="app-header">
+  <div class="app-brandline">
+    <div class="leaf">♡</div>
+    <div class="brand-title">Sara & Oliver</div>
+  </div>
+  <div class="app-date">21 noviembre 2026 · 17:00 h</div>
+  <div class="header-mini-stats">
+    <span class="header-pill">👥 <strong id="headGuests">0</strong></span>
+    <span class="header-pill">💶 <strong id="headMoney">0 €</strong></span>
+    <span class="header-pill">⏳ <strong id="headDays">—</strong> días</span>
+  </div>
+</header>
+<nav class="subnav">
+  <button class="active" data-page="inicio">🏠 Inicio</button><button data-page="invitados">👥 Invitados</button><button data-page="finanzas">💶 Regalos y gastos</button><button data-page="mesas">🪑 Mesas</button><button data-page="restaurante">🍽️ Restaurante</button><button data-page="alertas">🔔 Alertas</button><button data-page="seguimiento">✉️ Seguimiento</button><button data-page="tareas">☑️ Tareas</button>
+</nav>
+
+<main>
+<section class="page active" id="inicio">
+  <div class="grid-home">
+    <section class="card count-card"><div class="heart">♡</div><div class="count-label">Cuenta atrás para nuestra boda</div><div class="count-row"><div class="count-unit"><div class="count-num" id="days">—</div><div class="count-name">Días</div></div><div class="count-unit"><div class="count-num" id="hours">—</div><div class="count-name">Horas</div></div><div class="count-unit"><div class="count-num" id="minutes">—</div><div class="count-name">Minutos</div></div><div class="count-unit"><div class="count-num" id="seconds">—</div><div class="count-name">Segundos</div></div></div><div class="date-line">▣ &nbsp; 21 de noviembre de 2026 · 17:00 h</div><div class="script">¡Nos casamos!</div><div class="heart">♡</div></section>
+    <section class="card"><h2 class="title"><span class="icon-round">◷</span>Progreso de respuestas</h2><div class="progress-layout"><div class="donut" id="responseDonut"><span id="percentText">0%</span></div><div><div class="legend"><div class="legend-row"><span class="dot" style="background:var(--green)"></span><span>Respondidas</span><span style="color:var(--green);font-weight:800" id="answered">0</span></div><div class="legend-row"><span class="dot" style="background:var(--orange)"></span><span>Pendientes</span><span style="color:var(--orange);font-weight:800" id="pending">—</span></div><div class="legend-row"><span class="dot" style="background:#bcb7b1"></span><span>Total invitados</span><span style="font-weight:800" id="totalGuests">—</span></div></div></div></div><div class="mini-progress"><span id="responseMini" style="width:0%;background:var(--green)"></span></div><div id="lastResponse" style="margin-top:14px;color:#6d5e54">Esperando datos...</div></section>
+    <section class="card"><h2 class="title"><span class="icon-round" style="background:#fff3cc;color:#c98b22">△</span>Personas con alergias</h2><div class="empty-box" id="allergyBox"><div><div class="empty-icon">⚘</div><strong>Todavía no hay datos cargados.</strong><p>A medida que los invitados respondan, aparecerán aquí.</p></div></div></section>
+  </div>
+  <div class="two-col">
+    <section class="card"><h2 class="title"><span class="icon-round">🍽️</span>Distribución de menús</h2><div class="menu-bar"><div style="background:#e85c5f" id="barCarne">0%</div><div style="background:#6f9bc4" id="barPescado">0%</div><div style="background:#f0bd3d" id="barInfantil">0%</div></div><div class="menu-legend"><div><div class="menu-head"><span class="dot" style="background:#e85c5f"></span>Carne</div><div class="menu-count"><span id="carneCount">0</span> invitados</div></div><div><div class="menu-head"><span class="dot" style="background:#6f9bc4"></span>Pescado</div><div class="menu-count"><span id="pescadoCount">0</span> invitados</div></div><div><div class="menu-head"><span class="dot" style="background:#f0bd3d"></span>Infantil</div><div class="menu-count"><span id="infantilCount">0</span> invitados</div></div></div></section>
+    <section class="card"><h2 class="title"><span class="icon-round">▣</span>Últimas respuestas</h2><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Menú</th><th>Alergia</th><th>Detalle</th></tr></thead><tbody id="latestRows"><tr><td colspan="5">Cargando...</td></tr></tbody></table></section>
+  </div>
+  <div class="stats-row" id="moneyStatsHome"></div>
+</section>
+
+<section class="page" id="invitados">
+  <section class="panel"><div class="summary-cards" id="guestSummaryCards"></div><div class="panel-head"><h2 class="title"><span class="icon-round">👥</span>Todas las respuestas</h2><button class="btn" onclick="exportCSV()">Exportar CSV</button></div>
+  <div class="quick-filters"><button class="btn small" onclick="setQuick('sinMesa')">Sin mesa</button><button class="btn small" onclick="setQuick('pendientePago')">Sin regalo</button><button class="btn small" onclick="setQuick('alergia')">Con alergia</button><button class="btn small" onclick="setQuick('infantil')">Infantil</button><button class="btn small" onclick="setQuick('')">Limpiar</button></div>
+  <div class="toolbar"><input id="search" placeholder="Buscar por nombre, menú, alergia, mesa..."><select id="menuFilter"><option value="">Todos los menús</option><option>Carne</option><option>Pescado</option><option>Infantil</option></select><select id="payFilter"><option value="">Todos los regalos</option><option value="Sí">Regalo anotado</option><option value="No">Sin regalo</option></select><select id="statusFilter"><option value="">Todos los estados</option><option value="completo">Completo</option><option value="incompleto">Incompleto</option></select><select id="inviteFilter"><option value="">Todos</option><option value="Sara">👰 Sara</option><option value="Oliver">🤵 Oliver</option><option value="Ambos">👨‍👩‍👧 Ambos</option></select></div>
+  <table><thead><tr><th>Estado</th><th>Fecha</th><th>Nombre</th><th>Invita</th><th>Menú</th><th>Alergia</th><th>Detalle alergia</th><th>Regalo</th><th>Importe</th><th>Mesa</th><th>Regalo</th><th></th></tr></thead><tbody id="guestRows"></tbody></table></section>
+</section>
+
+<section class="page" id="finanzas">
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="title"><span class="icon-round">💶</span>Economía</h2>
+      <p class="economy-note">Los regalos se tratan como una ayuda que reduce el coste final de la boda, no como parte de los ahorros.</p>
+    </div>
+    <div class="summary-cards" id="economySummary"></div>
+  </section>
+
+  <div class="economy-grid">
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="title"><span class="icon-round">💰</span>Ahorros</h2>
+      </div>
+      <div class="savings-form">
+        <input id="savingName" placeholder="Concepto, ej. ahorro mensual">
+        <input id="savingAmount" type="number" min="0" step="1" placeholder="Cantidad">
+        <select id="savingType">
+          <option>Ahorro</option>
+          <option>Extra</option>
+          <option>Venta</option>
+          <option>Otro</option>
+        </select>
+        <button class="btn primary" onclick="addSaving()">Añadir</button>
+      </div>
+      <div class="list" id="savingsList"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="title"><span class="icon-round">🎁</span>Regalos recibidos</h2>
+      </div>
+      <div class="summary-cards" id="giftSummaryCards"></div>
+      <p class="economy-note">El detalle de cada regalo se gestiona desde la pestaña <b>Invitados</b>.</p>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="title"><span class="icon-round">🧾</span>Gastos de la boda</h2>
+    </div>
+    <div class="economy-form">
+      <input id="expenseName" placeholder="Concepto, ej. finca, fotógrafo, viaje...">
+      <input id="expenseAmount" type="number" min="0" step="1" placeholder="Total">
+      <input id="expensePaid" type="number" min="0" step="1" placeholder="Pagado">
+      <select id="expenseCategory">
+        <option>Celebración</option>
+        <option>Finca</option>
+        <option>Comida</option>
+        <option>Fotografía</option>
+        <option>Vestimenta</option>
+        <option>Decoración</option>
+        <option>Música</option>
+        <option>Viaje</option>
+        <option>Papelería</option>
+        <option>Otros</option>
+      </select>
+      <input id="expenseProvider" placeholder="Proveedor / notas">
+      <button class="btn primary" onclick="addExpense()">Añadir</button>
+    </div>
+    <div class="list" id="expenseList"></div>
+  </section>
+</section>
+
+<section class="page" id="mesas"><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round">🪑</span>Gestión de mesas</h2></div><div class="toolbar simple"><input id="newTableName" placeholder="Nombre de mesa, ej. Mesa 1"><select id="guestForTable"></select><button class="btn primary" onclick="assignGuestToTable()">Añadir invitado a mesa</button></div></section><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round">🪑</span>Mesas creadas</h2><span class="tag" id="tableTotal">0 mesas</span></div><div class="table-board" id="tablesList"></div></section></section>
+
+<section class="page" id="restaurante"><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round">🍽️</span>Vista restaurante</h2><button class="btn" onclick="copyRestaurant()">Copiar resumen</button><button class="btn" onclick="window.print()">Imprimir</button></div><div class="section-grid" id="restaurantCards"></div></section><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round" style="background:#fff3cc;color:#c98b22">△</span>Alergias y necesidades</h2></div><div class="list" id="restaurantAllergies"></div></section></section>
+
+<section class="page" id="alertas"><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round">🔔</span>Alertas por invitado</h2></div><div class="list" id="alertsList"></div></section></section>
+<section class="page" id="seguimiento">
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="title"><span class="icon-round">✉️</span>Seguimiento manual</h2>
+      <button class="btn" onclick="copyMissingMessage()">Copiar mensaje WhatsApp</button>
+    </div>
+    <p style="color:#6d5e54">Añade aquí los invitados que quieres controlar. Puedes separarlos por Sara, Oliver o Ambos y ver quién realizó el cuestionario.</p>
+
+    <div class="side-filters" id="trackingSideFilters">
+      <button class="btn small active" type="button" data-filter="">👥 Todos</button>
+      <button class="btn small" type="button" data-filter="Sara">👰 Sara</button>
+      <button class="btn small" type="button" data-filter="Oliver">🤵 Oliver</button>
+      <button class="btn small" type="button" data-filter="Ambos">👨‍👩‍👧 Ambos</button>
+    </div>
+
+    <div class="toolbar simple">
+      <input id="manualGuestName" placeholder="Nombre del invitado">
+      <select id="manualGuestInvite">
+        <option value="Sara">👰 Sara</option>
+        <option value="Oliver">🤵 Oliver</option>
+        <option value="Ambos">👨‍👩‍👧 Ambos</option>
+      </select>
+      <select id="manualGuestGroup">
+        <option>Familia</option>
+        <option>Amigos</option>
+        <option>Trabajo</option>
+        <option>Otros</option>
+      </select>
+      <button class="btn primary" onclick="addManualGuest()">Añadir invitado</button>
+    </div>
+
+    <div class="summary-cards" id="trackingSummaryCards"></div>
+
+    <div class="tracking-board">
+      <div class="tracking-box">
+        <h3>✅ Cuestionario recibido <span class="tag green" id="doneTrackingCount">0</span></h3>
+        <div id="doneTrackingList"></div>
+      </div>
+      <div class="tracking-box">
+        <h3>⏳ Pendiente de responder <span class="tag amber" id="pendingTrackingCount">0</span></h3>
+        <div id="pendingTrackingList"></div>
+      </div>
+    </div>
+  </section>
+</section>
+<section class="page" id="tareas"><section class="panel"><div class="panel-head"><h2 class="title"><span class="icon-round">☑️</span>Tareas</h2></div><div class="toolbar simple"><input id="newTaskText" placeholder="Nueva tarea..."><select id="taskType"><option>General</option><option>Restaurante</option><option>Mesas</option><option>Pagos</option><option>Invitados</option></select><button class="btn primary" onclick="addTask()">Añadir tarea</button></div><div class="list" id="taskList"></div></section></section>
+</main>
+<footer class="footer"><div>Sara & Oliver · Nuestra boda ♡</div><a href="index.html">Volver al formulario</a></footer>
+</div>
+
+<div class="modal" id="guestModal"><div class="modal-card"><div class="panel-head"><h2 id="modalTitle">Invitado</h2><button class="btn" onclick="closeModal()">Cerrar</button></div><div class="form-grid"><div><label>Regalo recibido</label><select id="editPaid"><option>No</option><option>Sí</option></select></div><div><label>Importe del regalo</label><input id="editAmount" type="number" min="0" step="1"></div><div><label>Mesa</label><input id="editTable"></div><div><label>Invita</label><select id="editInvita"><option>Sara</option><option>Oliver</option><option>Ambos</option></select></div><div><label>Regalo recibido</label><select id="editGift"><option>No</option><option>Sí</option></select></div><div class="wide"><label>Notas privadas</label><textarea id="editNotes"></textarea></div></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="saveGuest()">Guardar</button></div></div></div>
+<div class="toast" id="toast"></div>
+<div id="restaurantText" style="display:none"></div>
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwEz1CQt2ujkT6llcKMfdAzoRWhky1Wet2SbqHcKM3cf4yoiRzxmUe1x4iHynd5qAyE/exec";
+const WEDDING_DATE="2026-11-21T17:00:00";
+let responses=[],management={},invited=[],manualGuests=[],expenses=[],savings=[],selected=null,quick="",inviteFilter="",trackingFilter="";
+const sampleResponses=[{fecha:"2025-05-27",nombre:"María López",menu:"Carne",tieneAlergia:"No",alergias:"",observaciones:"Llegará en autobús"},{fecha:"2025-05-27",nombre:"Juan Pérez",menu:"Pescado",tieneAlergia:"Sí",alergias:"Marisco",observaciones:"Vegetariano en entrantes"},{fecha:"2025-05-26",nombre:"Laura Martín",menu:"Menú infantil",tieneAlergia:"Sí",alergias:"Lácteos",observaciones:"Leche, queso"}];
+const defaultTasks=[{text:"Reserva de finca",done:true,type:"General"},{text:"Invitaciones enviadas",done:true,type:"Invitados"},{text:"Cerrar confirmaciones",done:false,type:"Invitados"},{text:"Enviar listado al restaurante",done:false,type:"Restaurante"},{text:"Asignar mesas",done:false,type:"Mesas"}];
+
+
+function getNav(){
+  return document.querySelector(".subnav");
+}
+function updateNavArrows(){
+  const nav=getNav();
+  const left=document.getElementById("navLeft");
+  const right=document.getElementById("navRight");
+  if(!nav||!left||!right) return;
+  left.disabled = nav.scrollLeft <= 4;
+  right.disabled = nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 4;
+}
+function scrollNav(direction){
+  const nav=getNav();
+  if(!nav) return;
+  nav.scrollBy({left: direction * Math.round(nav.clientWidth * 0.75), behavior:"smooth"});
+  setTimeout(updateNavArrows, 320);
+}
+function centerActiveNav(){
+  const nav=getNav();
+  const active=document.querySelector(".subnav button.active");
+  if(!nav||!active) return;
+  const left = active.offsetLeft - (nav.clientWidth / 2) + (active.clientWidth / 2);
+  nav.scrollTo({left, behavior:"smooth"});
+  setTimeout(updateNavArrows, 320);
+}
+function updateHeaderStats(){
+  if(typeof getStats !== "function") return;
+  const s=getStats();
+  const d=Number(document.getElementById("days")?.textContent || 0);
+  const g=document.getElementById("headGuests");
+  const m=document.getElementById("headMoney");
+  const days=document.getElementById("headDays");
+  if(g) g.textContent=s.total || 0;
+  if(m) m.textContent=typeof money==="function" ? money(s.amount || 0) : (s.amount || 0);
+  if(days) days.textContent=isNaN(d) ? "—" : d;
+}
+
+document.querySelectorAll(".subnav button").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
+["search","menuFilter","payFilter","statusFilter","inviteFilter"].forEach(id=>document.getElementById(id)?.addEventListener("input",renderGuests));
+function showPage(page){document.querySelectorAll(".subnav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));centerActiveNav();}
+function updateCountdown(){let diff=new Date(WEDDING_DATE)-new Date();if(diff<0)diff=0;const d=Math.floor(diff/86400000);diff%=86400000;const h=Math.floor(diff/3600000);diff%=3600000;const m=Math.floor(diff/60000);diff%=60000;const s=Math.floor(diff/1000);document.getElementById("days").textContent=d;document.getElementById("hours").textContent=String(h).padStart(2,"0");document.getElementById("minutes").textContent=String(m).padStart(2,"0");document.getElementById("seconds").textContent=String(s).padStart(2,"0");}setInterval(()=>{updateCountdown();updateHeaderStats();},1000);updateCountdown();
+function loadLocal(){try{management=JSON.parse(localStorage.getItem("saraOliverManagementPro")||"{}")}catch(e){management={}}try{window.tasks=JSON.parse(localStorage.getItem("saraOliverTasksPro")||"null")||defaultTasks}catch(e){window.tasks=defaultTasks}try{manualGuests=JSON.parse(localStorage.getItem("saraOliverManualGuests")||"[]")}catch(e){manualGuests=[]}try{expenses=JSON.parse(localStorage.getItem("saraOliverExpenses")||"[]")}catch(e){expenses=[]}try{savings=JSON.parse(localStorage.getItem("saraOliverSavings")||"[]")}catch(e){savings=[]}}
+function saveLocal(){localStorage.setItem("saraOliverManagementPro",JSON.stringify(management));localStorage.setItem("saraOliverTasksPro",JSON.stringify(window.tasks||defaultTasks));localStorage.setItem("saraOliverManualGuests",JSON.stringify(manualGuests||[]));localStorage.setItem("saraOliverExpenses",JSON.stringify(expenses||[]));localStorage.setItem("saraOliverSavings",JSON.stringify(savings||[]));}
+function uniqueResponses(rows){
+  const seen=new Set();
+  return (Array.isArray(rows)?rows:[]).filter(r=>{
+    const key=[norm(r.nombre),String(r.menu||"").trim().toLowerCase(),String(r.tieneAlergia||"").trim().toLowerCase(),String(r.alergias||"").trim().toLowerCase()].join("|");
+    if(!key.replaceAll("|","")) return false;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+function normalizeRows(raw){let rows=[];if(Array.isArray(raw))rows=raw;if(raw&&Array.isArray(raw.responses)){if(raw.management)management=normalizeManagement(raw.management);if(raw.invited)invited=raw.invited;rows=raw.responses}return uniqueResponses(rows);}
+function normalizeManagement(arr){
+  const obj={};
+  (Array.isArray(arr)?arr:[]).forEach(x=>{
+    const key=norm(x.nombre);
+    const prev=management[key]||{};
+    obj[key]={
+      pagado:x.pagado||prev.pagado||"No",
+      importe:Number(x.importe||prev.importe||0),
+      mesa:x.mesa||prev.mesa||"",
+      notas:x.notas||prev.notas||"",
+      transporte:x.transporte||prev.transporte||"",
+      regalo:x.regalo||prev.regalo||"No",
+      gracias:x.gracias||prev.gracias||"No",
+      invita:x.invita||prev.invita||"Ambos"
+    };
+  });
+  return obj;
+}
+async function loadData(){loadLocal();try{const res=await fetch(SCRIPT_URL+"?cache="+Date.now());const raw=await res.json();responses=normalizeRows(raw);}catch(e){responses=sampleResponses;toast("Modo maqueta: no se pudieron cargar datos reales.")}mergeGuests();renderAll();}
+function mergeGuests(){responses.forEach(r=>{const key=norm(r.nombre);if(!management[key])management[key]={pagado:"No",importe:0,mesa:"",notas:"",transporte:"",regalo:"No",gracias:"No",invita:"Ambos"}});saveLocal();}
+function getStats(){const total=responses.length,carne=responses.filter(r=>String(r.menu||"").toLowerCase().includes("carne")).length,pescado=responses.filter(r=>String(r.menu||"").toLowerCase().includes("pesc")).length,infantil=responses.filter(r=>String(r.menu||"").toLowerCase().includes("inf")).length,allergies=responses.filter(hasAllergy).length,paid=responses.filter(r=>management[norm(r.nombre)]?.pagado==="Sí").length,amount=responses.reduce((s,r)=>s+Number(management[norm(r.nombre)]?.importe||0),0),tables=new Set(responses.map(r=>management[norm(r.nombre)]?.mesa).filter(Boolean)).size,gifts=responses.filter(r=>management[norm(r.nombre)]?.regalo==="Sí").length,thanks=responses.filter(r=>management[norm(r.nombre)]?.gracias==="Sí").length;return{total,carne,pescado,infantil,allergies,paid,pendingPay:total-paid,amount,tables,gifts,thanks}}
+function renderAll(){renderHome();renderGuests();renderGuestSummary();renderMoney();renderGuestSelect();renderTables();renderRestaurant();renderAlerts();renderMissing();renderTasks();}
+function renderHome(){const s=getStats(),total=s.total||1,pc=Math.round(s.carne/total*100),pp=Math.round(s.pescado/total*100),pi=Math.max(0,100-pc-pp);barCarne.textContent=pc+"%";barPescado.textContent=pp+"%";barInfantil.textContent=pi+"%";document.querySelector(".menu-bar").style.gridTemplateColumns=`${pc||1}fr ${pp||1}fr ${pi||1}fr`;carneCount.textContent=s.carne;pescadoCount.textContent=s.pescado;infantilCount.textContent=s.infantil;const trackingTotal=manualGuests.length||invited.length;const rp=trackingTotal?Math.round(Math.min(s.total,trackingTotal)/trackingTotal*100):100;percentText.textContent=rp+"%";answered.textContent=s.total;pending.textContent=trackingTotal?Math.max(0,trackingTotal-s.total):"—";totalGuests.textContent=trackingTotal||s.total;responseDonut.style.background=`conic-gradient(var(--green) 0 ${rp}%, #e5e2de ${rp}% 100%)`;responseMini.style.width=rp+"%";lastResponse.textContent=s.total?"Última carga: "+new Date().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"}):"Esperando respuestas";const allergyList=responses.filter(hasAllergy);allergyBox.innerHTML=allergyList.length?`<div style="width:100%;text-align:left">${allergyList.slice(0,5).map(r=>`<div style="margin:8px 0"><strong>${esc(r.nombre)}</strong><br><span style="color:#6d5e54">${esc(r.alergias||"Sin detalle")}</span></div>`).join("")}</div>`:`<div><div class="empty-icon">⚘</div><strong>Todavía no hay datos cargados.</strong><p>A medida que los invitados respondan, aparecerán aquí.</p></div>`;latestRows.innerHTML=responses.slice(-5).reverse().map(r=>`<tr><td>${formatDate(r.fecha)}</td><td>${esc(r.nombre)}</td><td>${menuDot(r.menu)}${esc(r.menu)}</td><td>${hasAllergy(r)?"Sí":"No"}</td><td>${esc(r.alergias||"—")}</td></tr>`).join("")||`<tr><td colspan="5">No hay respuestas todavía.</td></tr>`;renderMoneyCards("moneyStatsHome");updateHeaderStats();}
+function renderMoneyCards(id){const s=getStats();document.getElementById(id).innerHTML=[["🎁","Regalos recibidos",money(s.amount),"Importe registrado",100,"var(--green)"],["✓","Con regalo",s.paid,`${s.total?Math.round(s.paid/s.total*100):0}% del total`,s.total?Math.round(s.paid/s.total*100):0,"var(--blue)"],["◷","Sin regalo anotado",s.pendingPay,`${s.total?Math.round(s.pendingPay/s.total*100):0}% del total`,s.total?Math.round(s.pendingPay/s.total*100):0,"var(--orange)"],["🎁","Regalos",s.gifts,"Regalo recibido",s.total?Math.round(s.gifts/s.total*100):0,"var(--purple)"]].map(i=>`<div class="stat-card"><div class="stat-title"><span class="stat-icon">${i[0]}</span>${i[1]}</div><div class="stat-value">${i[2]}</div><div class="stat-desc">${i[3]}</div><div class="tinybar"><span style="width:${i[4]}%;background:${i[5]}"></span></div></div>`).join("");}
+function statusOf(r){const m=management[norm(r.nombre)]||{},items=[];if(m.pagado!=="Sí")items.push("regalo");if(!m.mesa)items.push("mesa");if(hasAllergy(r)&&!r.alergias)items.push("alergia");return items.length?items:"completo";}
+function filtered(){
+  const q=(search?.value||"").toLowerCase(),menu=(menuFilter?.value||"").toLowerCase(),pay=payFilter?.value||"",status=statusFilter?.value||"",inv=(document.getElementById("inviteFilter")?.value||"");
+  return responses.filter(r=>{
+    const m=management[norm(r.nombre)]||{},hay=[r.nombre,r.menu,r.alergias,r.observaciones,m.mesa,m.notas,m.pagado,m.transporte,m.invita].join(" ").toLowerCase(),st=statusOf(r);
+    let okQuick=true;
+    if(quick==="sinMesa")okQuick=!m.mesa;
+    if(quick==="pendientePago")okQuick=m.pagado!=="Sí";
+    if(quick==="alergia")okQuick=hasAllergy(r);
+    if(quick==="infantil")okQuick=String(r.menu||"").toLowerCase().includes("inf");
+    return okQuick&&(!q||hay.includes(q))&&(!menu||String(r.menu||"").toLowerCase().includes(menu))&&(!pay||(m.pagado||"No")===pay)&&(!status||(status==="completo"?st==="completo":st!=="completo"))&&(!inv||(m.invita||"Ambos")===inv)
+  })
+}
+function setQuick(v){quick=v;renderGuests();}
+function renderGuests(){guestRows.innerHTML=filtered().map(r=>{const key=norm(r.nombre),m=management[key]||{},st=statusOf(r);return`<tr><td>${st==="completo"?`<span class="tag green">Completo</span>`:`<span class="tag amber">Falta ${Array.isArray(st)?st.join(", "):st}</span>`}</td><td>${formatDate(r.fecha)}</td><td><b>${esc(r.nombre)}</b></td><td><select class="invita-select" onchange="quickInvita(\'${key}\',this.value)"><option value="Sara" ${(m.invita||"Ambos")==="Sara"?"selected":""}>👰 Sara</option><option value="Oliver" ${(m.invita||"Ambos")==="Oliver"?"selected":""}>🤵 Oliver</option><option value="Ambos" ${(m.invita||"Ambos")==="Ambos"?"selected":""}>👨‍👩‍👧 Ambos</option></select></td><td>${menuDot(r.menu)}${esc(r.menu)}</td><td>${hasAllergy(r)?"Sí":"No"}</td><td>${hasAllergy(r)?esc(r.alergias||"Sin detalle"):"—"}</td><td>${m.pagado==="Sí"?`<span class="tag green">Anotado</span>`:`<span class="tag amber">Sin anotar</span>`}</td><td><input type="number" value="${m.importe||0}" style="max-width:90px" onchange="quickAmount('${key}',this.value)"> €</td><td><input value="${attr(m.mesa||"")}" style="max-width:100px" onchange="quickTable('${key}',this.value)" placeholder="Mesa"></td><td>${m.regalo==="Sí"?`<span class="tag purple">Sí</span>`:"No"}</td><td><button class="btn small" onclick="openGuest('${key}')">Editar</button></td></tr>`}).join("")||`<tr><td colspan="12">No hay resultados.</td></tr>`;}
+
+function renderGuestSummary(){
+  if(!document.getElementById("guestSummaryCards")) return;
+  const s=getStats();
+  const sinMesa=responses.filter(r=>!management[norm(r.nombre)]?.mesa).length;
+  const pendientes=responses.filter(r=>management[norm(r.nombre)]?.pagado!=="Sí").length;
+  const incompletos=responses.filter(r=>statusOf(r)!=="completo").length;
+  guestSummaryCards.innerHTML=[
+    ["👥","Respuestas",s.total],
+    ["🪑","Sin mesa",sinMesa],
+    ["💶","Sin regalo",pendientes],
+    ["⚠️","Con alergia",s.allergies],["👰","Sara",responses.filter(r=>(management[norm(r.nombre)]?.invita||"Ambos")==="Sara").length],["🤵","Oliver",responses.filter(r=>(management[norm(r.nombre)]?.invita||"Ambos")==="Oliver").length]
+  ].map(x=>`<div class="summary-card"><div class="label">${x[0]} ${x[1]}</div><div class="num">${x[2]}</div></div>`).join("");
+}
+
+function renderMoney(){
+  const s=getStats();
+  const totalSavings=savings.reduce((sum,e)=>sum+Number(e.amount||0),0);
+  const totalExpenses=expenses.reduce((sum,e)=>sum+Number(e.amount||0),0);
+  const totalPaidExpenses=expenses.reduce((sum,e)=>sum+Number(e.paid||0),0);
+  const pendingExpenses=Math.max(0,totalExpenses-totalPaidExpenses);
+  const gifts=Number(s.amount||0);
+  const currentBalance=totalSavings-totalPaidExpenses;
+  const finalCost=Math.max(0,totalExpenses-gifts);
+
+  if(document.getElementById("economySummary")){
+    economySummary.innerHTML=[
+      ["💰","Ahorros",money(totalSavings)],
+      ["🎁","Regalos recibidos",money(gifts)],
+      ["💸","Gastos totales",money(totalExpenses)],
+      ["✅","Ya pagado",money(totalPaidExpenses)],
+      ["⏳","Pendiente de pagar",money(pendingExpenses)],
+      ["📈","Balance actual",money(currentBalance)],
+      ["🧾","Coste final estimado",money(finalCost)],
+      ["🎯","Ayuda de regalos",totalExpenses?Math.round((gifts/totalExpenses)*100)+"%":"0%"]
+    ].map(x=>`<div class="summary-card"><div class="label">${x[0]} ${x[1]}</div><div class="num">${x[2]}</div></div>`).join("");
+  }
+
+  const giftPeople=responses.filter(r=>management[norm(r.nombre)]?.pagado==="Sí").length;
+  const pendingGiftPeople=Math.max(0,responses.length-giftPeople);
+  const avgGift=giftPeople?Math.round(gifts/giftPeople):0;
+  if(document.getElementById("giftSummaryCards")){
+    giftSummaryCards.innerHTML=[
+      ["👥","Personas con regalo",giftPeople],
+      ["💶","Importe total recibido",money(gifts)],
+      ["💵","Media por persona",money(avgGift)],
+      ["⏳","Regalos pendientes",pendingGiftPeople]
+    ].map(x=>`<div class="summary-card"><div class="label">${x[0]} ${x[1]}</div><div class="num">${x[2]}</div></div>`).join("");
+  }
+
+  renderSavings();
+  renderExpenses();
+}
+function renderSavings(){
+  if(!document.getElementById("savingsList")) return;
+  if(!savings.length){
+    savingsList.innerHTML=`<div class="row-card">Todavía no has añadido ahorros.</div>`;
+    return;
+  }
+  savingsList.innerHTML=savings.map((e,i)=>`
+    <div class="row-card">
+      <div class="row-head">
+        <div><strong>${esc(e.name)}</strong><br><span style="color:#6d5e54">${esc(e.type||"Ahorro")} · ${esc(e.date||"")}</span></div>
+        <div>
+          <span class="tag green">${money(e.amount||0)}</span>
+          <button class="btn small" onclick="editSaving(${i})">Editar</button>
+          <button class="btn small" onclick="deleteSaving(${i})">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+function addSaving(){
+  const name=(document.getElementById("savingName")?.value||"").trim();
+  const amount=Number(document.getElementById("savingAmount")?.value||0);
+  const type=document.getElementById("savingType")?.value||"Ahorro";
+  if(!name){toast("Escribe el concepto del ahorro");return;}
+  if(!amount){toast("Escribe la cantidad");return;}
+  savings.push({name,amount,type,date:new Date().toLocaleDateString("es-ES")});
+  document.getElementById("savingName").value="";
+  document.getElementById("savingAmount").value="";
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+  toast("Ahorro añadido");
+}
+function editSaving(i){
+  const current=savings[i];
+  const name=prompt("Concepto",current.name);
+  if(name===null) return;
+  const amount=prompt("Cantidad",current.amount);
+  if(amount===null) return;
+  savings[i].name=name.trim()||current.name;
+  savings[i].amount=Number(amount||current.amount);
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+}
+function deleteSaving(i){
+  if(!confirm("¿Eliminar este ahorro?")) return;
+  savings.splice(i,1);
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+}
+function renderExpenses(){
+  if(!document.getElementById("expenseList")) return;
+  if(!expenses.length){
+    expenseList.innerHTML=`<div class="row-card">Todavía no has añadido gastos.</div>`;
+    return;
+  }
+  expenseList.innerHTML=`
+    <table class="money-table">
+      <thead><tr><th>Concepto</th><th>Categoría</th><th>Total</th><th>Pagado</th><th>Pendiente</th><th>Estado</th><th>Proveedor / notas</th><th></th></tr></thead>
+      <tbody>
+        ${expenses.map((e,i)=>{
+          const total=Number(e.amount||0);
+          const paid=Number(e.paid||0);
+          const pending=Math.max(0,total-paid);
+          const status=pending<=0?"Pagado":paid>0?"Parcial":"Pendiente";
+          const cls=pending<=0?"status-paid":paid>0?"status-partial":"status-pending";
+          return `<tr>
+            <td><strong>${esc(e.name)}</strong><br><span style="color:#6d5e54">${esc(e.date||"")}</span></td>
+            <td>${esc(e.category||"General")}</td>
+            <td>${money(total)}</td>
+            <td><input type="number" min="0" step="1" value="${paid}" style="max-width:95px" onchange="quickExpensePaid(${i}, this.value)"> €</td>
+            <td>${money(pending)}</td>
+            <td><span class="tag ${cls}">${status}</span></td>
+            <td>${esc(e.provider||"—")}</td>
+            <td><button class="btn small" onclick="editExpense(${i})">Editar</button> <button class="btn small" onclick="deleteExpense(${i})">Eliminar</button></td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>`;
+}
+
+function quickExpensePaid(i,value){
+  expenses[i].paid=Number(value||0);
+  if(expenses[i].paid > Number(expenses[i].amount||0)){
+    expenses[i].paid = Number(expenses[i].amount||0);
+  }
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+  toast("Pago actualizado");
+}
+
+function addExpense(){
+  const name=(document.getElementById("expenseName")?.value||"").trim();
+  const amount=Number(document.getElementById("expenseAmount")?.value||0);
+  const paid=Number(document.getElementById("expensePaid")?.value||0);
+  const category=document.getElementById("expenseCategory")?.value||"General";
+  const provider=(document.getElementById("expenseProvider")?.value||"").trim();
+  if(!name){toast("Escribe el concepto del gasto");return;}
+  if(!amount){toast("Escribe el importe total");return;}
+  expenses.push({name,amount,paid,category,provider,date:new Date().toLocaleDateString("es-ES")});
+  document.getElementById("expenseName").value="";
+  document.getElementById("expenseAmount").value="";
+  document.getElementById("expensePaid").value="";
+  document.getElementById("expenseProvider").value="";
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+  toast("Gasto añadido");
+}
+function editExpense(i){
+  const current=expenses[i];
+  const name=prompt("Concepto del gasto",current.name);
+  if(name===null) return;
+  const amount=prompt("Importe total",current.amount);
+  if(amount===null) return;
+  const paid=prompt("Ya pagado",current.paid||0);
+  if(paid===null) return;
+  const provider=prompt("Proveedor / notas",current.provider||"");
+  if(provider===null) return;
+  expenses[i].name=name.trim()||current.name;
+  expenses[i].amount=Number(amount||current.amount);
+  expenses[i].paid=Number(paid||0);
+  expenses[i].provider=provider;
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+}
+function deleteExpense(i){
+  if(!confirm("¿Eliminar este gasto?")) return;
+  expenses.splice(i,1);
+  saveLocal();
+  renderMoney();
+  updateHeaderStats();
+}
+function renderGuestSelect(){if(!guestForTable)return;guestForTable.innerHTML=responses.map(r=>`<option value="${attr(norm(r.nombre))}">${esc(r.nombre)}</option>`).join("");}
+function assignGuestToTable(){const table=(newTableName.value||"").trim(),guest=guestForTable.value;if(!table){toast("Escribe el nombre de la mesa");return}if(!guest){toast("Elige un invitado");return}management[guest]||={};management[guest].mesa=table;saveLocal();sync(guest);renderAll();toast("Invitado añadido a "+table);}
+function renderTables(){const groups={};responses.forEach(r=>{const mesa=management[norm(r.nombre)]?.mesa||"Sin mesa";(groups[mesa]||=[]).push(r)});const keys=Object.keys(groups).sort((a,b)=>a.localeCompare(b,"es"));tableTotal.textContent=keys.filter(k=>k!=="Sin mesa").length+" mesas";tablesList.innerHTML=keys.map(k=>`<div class="table-card"><h3>🪑 ${esc(k)} <span class="tag">${groups[k].length} invitados</span></h3><div>${groups[k].map(r=>`<span class="guest-pill">${esc(r.nombre)} <button class="x-btn" onclick="removeFromTable('${norm(r.nombre)}')" title="Quitar de esta mesa">×</button></span>`).join("")}</div></div>`).join("");}
+function removeFromTable(key){management[key] ||= {};management[key].mesa="";saveLocal();sync(key);renderAll();toast("Invitado quitado de la mesa");}
+function renderRestaurant(){const menus=[["🥩","Carne"],["🐟","Pescado"],["👶","Menú infantil"]];restaurantCards.innerHTML=menus.map(([icon,name])=>{const list=responses.filter(r=>String(r.menu||"").toLowerCase().includes(name.toLowerCase().split(" ")[0]));return`<div class="menu-card"><h3>${icon} ${esc(name)}</h3><div class="big">${list.length}</div><div class="menu-list">${list.length?list.map(r=>`<div class="menu-person">${esc(r.nombre)}</div>`).join(""):`<div style="color:#6d5e54">Sin invitados</div>`}</div></div>`}).join("");const allergies=responses.filter(hasAllergy);restaurantAllergies.innerHTML=allergies.length?allergies.map(r=>`<div class="row-card"><div class="row-head"><strong>${esc(r.nombre)}</strong><span class="tag">${esc(r.menu)}</span></div><span class="tag red">⚠️ ${esc(r.alergias||"Sin detalle")}</span></div>`).join(""):`<div class="row-card">No hay alergias registradas.</div>`;restaurantText.textContent=buildRestaurantText();}
+function renderAlerts(){alertsList.innerHTML=responses.map(r=>{const m=management[norm(r.nombre)]||{},items=[];if(m.pagado!=="Sí")items.push("🎁 Falta regalo");if(!m.mesa)items.push("🪑 Falta mesa");if(hasAllergy(r)&&!r.alergias)items.push("⚠️ Falta alergia");if(!items.length)items.push("✅ Todo completo");return`<div class="row-card"><div class="row-head"><strong>${esc(r.nombre)}</strong><span>${menuDot(r.menu)}${esc(r.menu)}</span></div><div class="chips">${items.map(x=>`<span class="tag ${x.startsWith("✅")?"green":"amber"}">${esc(x)}</span>`).join("")}</div></div>`}).join("");}
+function renderMissing(){
+  const answered=new Set(responses.map(r=>norm(r.nombre)));
+  const filter=trackingFilter||"";
+  const tracked=manualGuests.filter(g=>!filter || (g.invita||"Ambos")===filter);
+  const total=tracked.length;
+  const doneItems=tracked.filter(g=>answered.has(norm(g.name)) || g.done);
+  const pendingItems=tracked.filter(g=>!(answered.has(norm(g.name)) || g.done));
+  const counts={Todos:manualGuests.length,Sara:manualGuests.filter(g=>(g.invita||"Ambos")==="Sara").length,Oliver:manualGuests.filter(g=>(g.invita||"Ambos")==="Oliver").length,Ambos:manualGuests.filter(g=>(g.invita||"Ambos")==="Ambos").length};
+  document.querySelectorAll("#trackingSideFilters button").forEach(btn=>{
+    const f=btn.dataset.filter||"";
+    btn.classList.toggle("active",f===filter);
+    if(f==="") btn.innerHTML=`👥 Todos (${counts.Todos})`;
+    if(f==="Sara") btn.innerHTML=`👰 Sara (${counts.Sara})`;
+    if(f==="Oliver") btn.innerHTML=`🤵 Oliver (${counts.Oliver})`;
+    if(f==="Ambos") btn.innerHTML=`👨‍👩‍👧 Ambos (${counts.Ambos})`;
+  });
+  if(document.getElementById("trackingSummaryCards")){
+    trackingSummaryCards.innerHTML=[
+      ["👥","Añadidos",total],["✅","Recibidos",doneItems.length],["⏳","Pendientes",pendingItems.length],["📊","Progreso",total?Math.round(doneItems.length/total*100)+"%":"0%"]
+    ].map(x=>`<div class="summary-card"><div class="label">${x[0]} ${x[1]}</div><div class="num">${x[2]}</div></div>`).join("");
+  }
+  const doneBox=document.getElementById("doneTrackingList"),pendingBox=document.getElementById("pendingTrackingList"),doneCount=document.getElementById("doneTrackingCount"),pendingCount=document.getElementById("pendingTrackingCount");
+  if(doneCount) doneCount.textContent=doneItems.length;
+  if(pendingCount) pendingCount.textContent=pendingItems.length;
+  const chip=(g,i,responded)=>`<div class="tracking-chip" title="${esc(g.name)}"><select onchange="quickManualInvita(${i}, this.value)"><option value="Sara" ${(g.invita||"Ambos")==="Sara"?"selected":""}>👰</option><option value="Oliver" ${(g.invita||"Ambos")==="Oliver"?"selected":""}>🤵</option><option value="Ambos" ${(g.invita||"Ambos")==="Ambos"?"selected":""}>👨‍👩‍👧</option></select><span class="tracking-chip-name">${esc(g.name)}</span><button class="tracking-action ${responded?"done":"pending"}" onclick="toggleManualGuest(${i})" title="${responded?"Marcar pendiente":"Marcar recibido"}">${responded?"✓":"✕"}</button><button class="tracking-action delete" onclick="deleteManualGuest(${i})" title="Eliminar">×</button></div>`;
+  if(!tracked.length){if(doneBox) doneBox.innerHTML=`<div class="row-card">No hay invitados en este filtro.</div>`;if(pendingBox) pendingBox.innerHTML=`<div class="row-card">Añade invitados o cambia de filtro.</div>`;return;}
+  if(doneBox) doneBox.innerHTML=doneItems.length?`<div class="tracking-compact-list">${doneItems.map(g=>chip(g,manualGuests.indexOf(g),true)).join("")}</div>`:`<div class="row-card">Nadie de este filtro ha realizado el cuestionario todavía.</div>`;
+  if(pendingBox) pendingBox.innerHTML=pendingItems.length?`<div class="tracking-compact-list">${pendingItems.map(g=>chip(g,manualGuests.indexOf(g),false)).join("")}</div>`:`<div class="row-card">Todos en este filtro han realizado el cuestionario 🎉</div>`;
+}
+function setTrackingFilter(value,btn){
+  trackingFilter=value||"";
+  document.querySelectorAll("#trackingSideFilters button").forEach(b=>b.classList.toggle("active",(b.dataset.filter||"")===trackingFilter));
+  renderMissing();
+}
+function initTrackingFilters(){
+  document.querySelectorAll("#trackingSideFilters button").forEach(btn=>{
+    btn.onclick=()=>setTrackingFilter(btn.dataset.filter||"",btn);
+  });
+}
+function quickManualInvita(i,value){
+  manualGuests[i].invita=value;
+  saveLocal();
+  renderMissing();
+  toast("Invita actualizado");
+}
+function addManualGuest(){
+  const name=(document.getElementById("manualGuestName")?.value||"").trim();
+  const group=document.getElementById("manualGuestGroup")?.value||"Otros";
+  const invita=document.getElementById("manualGuestInvite")?.value||"Ambos";
+  if(!name){toast("Escribe el nombre del invitado");return;}
+  if(manualGuests.some(g=>norm(g.name)===norm(name))){toast("Ese invitado ya está en seguimiento");return;}
+  manualGuests.push({name,group,invita,done:false});
+  document.getElementById("manualGuestName").value="";
+  saveLocal();
+  renderMissing();
+  renderHome();
+  toast("Invitado añadido al seguimiento");
+}
+function quickManualInvita(i,value){
+  manualGuests[i].invita=value;
+  saveLocal();
+  renderMissing();
+  toast("Invita actualizado");
+}
+function toggleManualGuest(i){
+  manualGuests[i].done=!manualGuests[i].done;
+  saveLocal();
+  renderMissing();
+  renderHome();
+}
+function deleteManualGuest(i){
+  if(!confirm("¿Eliminar este invitado del seguimiento?")) return;
+  manualGuests.splice(i,1);
+  saveLocal();
+  renderMissing();
+  renderHome();
+}
+function renderTasks(){
+  window.tasks ||= defaultTasks;
+
+  const pendingTasks = window.tasks
+    .map((t,i)=>({t,i}))
+    .filter(item => !item.t.done);
+
+  const doneTasks = window.tasks
+    .map((t,i)=>({t,i}))
+    .filter(item => item.t.done);
+
+  const taskCard = ({t,i}) => `
+    <div class="row-card">
+      <div class="row-head">
+        <strong>${t.done ? "✅" : "○"} ${esc(t.text)}</strong>
+        <div>
+          <span class="tag blue">${esc(t.type||"General")}</span>
+          <button class="btn small" onclick="editTask(${i})">Editar</button>
+          <button class="btn small" onclick="toggleTask(${i})">${t.done ? "Pendiente" : "Hecha"}</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  taskList.innerHTML = `
+    <div class="row-card" style="background:#fffdf9">
+      <strong style="font-family:var(--serif);font-size:20px">Pendientes</strong>
+    </div>
+    ${pendingTasks.length ? pendingTasks.map(taskCard).join("") : `<div class="row-card" style="color:#6d5e54">No hay tareas pendientes.</div>`}
+
+    <div class="row-card" style="background:#fffdf9;margin-top:8px">
+      <strong style="font-family:var(--serif);font-size:20px">Hechas</strong>
+    </div>
+    ${doneTasks.length ? doneTasks.map(taskCard).join("") : `<div class="row-card" style="color:#6d5e54">Todavía no has marcado ninguna tarea como hecha.</div>`}
+  `;
+}
+function openGuest(key){selected=key;const r=responses.find(x=>norm(x.nombre)===key),m=management[key]||{};modalTitle.textContent=r?.nombre||"Invitado";editPaid.value=m.pagado||"No";editAmount.value=m.importe||"";editTable.value=m.mesa||"";editInvita.value=m.invita||"Ambos";editNotes.value=m.notas||"";editGift.value=m.regalo||"No";guestModal.classList.add("open");}
+function closeModal(){guestModal.classList.remove("open");}
+function saveGuest(){management[selected]={pagado:editPaid.value,importe:Number(editAmount.value||0),mesa:editTable.value,invita:editInvita.value,notas:editNotes.value,regalo:editGift.value};saveLocal();sync(selected);closeModal();renderAll();toast("Guardado");}
+function quickAmount(key,value){management[key]||={};management[key].importe=Number(value||0);if(management[key].importe>0)management[key].pagado="Sí";saveLocal();sync(key);renderAll();}
+function quickTable(key,value){management[key]||={};management[key].mesa=value;saveLocal();sync(key);renderAll();}
+function quickInvita(key,value){management[key]||={};management[key].invita=value;saveLocal();sync(key);renderAll();toast("Invita actualizado");}
+function markPaid(key){management[key]||={};management[key].pagado="Sí";if(!management[key].importe)management[key].importe=60;saveLocal();sync(key);renderAll();}
+async function sync(key){
+  const r=responses.find(x=>norm(x.nombre)===key),m=management[key]||{};
+  try{
+    const fd=new FormData();
+    fd.append("action","management");
+    fd.append("nombre",r?.nombre||key);
+    fd.append("pagado",m.pagado||"No");
+    fd.append("importe",m.importe||0);
+    fd.append("mesa",m.mesa||"");
+    fd.append("notas",m.notas||"");
+    fd.append("invita",m.invita||"Ambos");
+    fd.append("transporte",m.transporte||"");
+    fd.append("regalo",m.regalo||"No");
+    fd.append("gracias",m.gracias||"No");
+    await fetch(SCRIPT_URL+"?action=management",{method:"POST",body:fd,mode:"no-cors"});
+  }catch(e){}
+}
+function toggleTask(i){window.tasks[i].done=!window.tasks[i].done;saveLocal();renderTasks();}
+function editTask(i){const t=prompt("Editar tarea",window.tasks[i].text);if(t!==null){window.tasks[i].text=t;saveLocal();renderTasks();}}
+function addTask(){
+  const input = document.getElementById("newTaskText");
+  const type = document.getElementById("taskType");
+  const t = (input ? input.value : "").trim();
+  if(!t){ toast("Escribe una tarea primero"); return; }
+  window.tasks ||= defaultTasks;
+  window.tasks.push({text:t,done:false,type:type ? type.value : "General"});
+  input.value = "";
+  saveLocal();
+  renderTasks();
+  toast("Tarea añadida");
+}
+
+function exportBackup(){
+  const data={
+    version:"sara-oliver-dashboard-v8",
+    exportedAt:new Date().toISOString(),
+    management,
+    tasks:window.tasks||defaultTasks,
+    manualGuests:manualGuests||[],expenses:expenses||[],savings:savings||[]
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="copia_seguridad_boda_sara_oliver.json";
+  a.click();
+  toast("Copia de seguridad descargada");
+}
+function importBackup(event){
+  const file=event.target.files?.[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      if(data.management) management=data.management;
+      if(data.tasks) window.tasks=data.tasks;
+      if(data.manualGuests) manualGuests=data.manualGuests;if(data.expenses) expenses=data.expenses;if(data.savings) savings=data.savings;
+      saveLocal();
+      renderAll();
+      toast("Copia importada correctamente");
+    }catch(e){
+      toast("No se pudo importar la copia");
+    }
+  };
+  reader.readAsText(file);
+  event.target.value="";
+}
+
+function copyMissingMessage(){const msg="Hola 😊 Nos gustaría saber si podrás acompañarnos en nuestra boda. Cuando puedas, rellena el formulario: https://oliysara.github.io/FORMULARIO-/";navigator.clipboard.writeText(msg);toast("Mensaje copiado");}
+function copyRestaurant(){navigator.clipboard.writeText(buildRestaurantText());toast("Resumen copiado");}
+function buildRestaurantText(){const by=t=>responses.filter(r=>String(r.menu||"").toLowerCase().includes(t)).map(r=>"- "+r.nombre).join("\n")||"-";const allergies=responses.filter(hasAllergy).map(r=>`- ${r.nombre}: ${r.alergias||"Sin detalle"} (${r.menu})`).join("\n")||"-";return`RESUMEN RESTAURANTE · SARA & OLIVER\n\n🥩 CARNE\n${by("carne")}\n\n🐟 PESCADO\n${by("pesc")}\n\n👶 INFANTIL\n${by("inf")}\n\n⚠️ ALERGIAS\n${allergies}`;}
+function exportCSV(){const rows=[["Fecha","Nombre","Menú","Alergia","Detalle","Observaciones","Pagado","Importe","Mesa","Regalo"],...responses.map(r=>{const m=management[norm(r.nombre)]||{};return[r.fecha,r.nombre,r.menu,r.tieneAlergia,r.alergias,r.observaciones,m.pagado,m.importe,m.mesa,m.regalo]})];const csv=rows.map(row=>row.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="boda_sara_oliver.csv";a.click();}
+function menuDot(menu){return`<span class="menu-dot" style="background:${menuColor(menu)}"></span>`}function menuColor(menu){const m=String(menu||"").toLowerCase();if(m.includes("pesc"))return"#6f9bc4";if(m.includes("inf"))return"#f0bd3d";return"#e85c5f";}
+function hasAllergy(x){return String(x.tieneAlergia||"").toLowerCase().startsWith("s")||String(x.alergias||"").trim();}function norm(s){return String(s||"").trim().toLowerCase();}function formatDate(v){const d=new Date(v);if(isNaN(d))return esc(v||"");return d.toLocaleDateString("es-ES");}function money(n){return new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(Number(n||0));}function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}function attr(v){return esc(v).replaceAll("\n"," ");}function toast(t){const el=document.getElementById("toast");el.textContent=t;el.style.display="block";setTimeout(()=>el.style.display="none",2400);}
+setTimeout(()=>{centerActiveNav();updateNavArrows();initTrackingFilters();const nav=getNav();if(nav)nav.addEventListener("scroll",updateNavArrows);},300);
+initTrackingFilters();
+loadData();
+</script>
+
+<script>
+(function(){
+ if(localStorage.getItem("dashboardAuth")==="ok"){
+   const o=document.getElementById("loginOverlay");
+   if(o) o.style.display="none";
+ }
+})();
+function checkLogin(){
+ const pass=document.getElementById("loginPassword").value;
+ if(pass==="boda26"){
+   localStorage.setItem("dashboardAuth","ok");
+   document.getElementById("loginOverlay").style.display="none";
+ }else{
+   document.getElementById("loginError").style.display="block";
+ }
+}
+</script>
+
+</body></html>
